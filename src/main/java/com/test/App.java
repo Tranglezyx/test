@@ -22,13 +22,10 @@ import java.util.*;
  */
 public class App {
     public static void main(String[] args) {
-//        Doing say = new Say();
-//        InvocationHandler handler = new InvocationHandlerUtils(say);
-//        Doing proxy = (Doing) Proxy.newProxyInstance(say.getClass().getClassLoader(),say.getClass().getInterfaces(),handler);
-//        proxy.say("hello world");
-
-
-
+        Doing say = new Say();
+        InvocationHandler handler = new InvocationHandlerUtils(say);
+        Doing proxy = (Doing) Proxy.newProxyInstance(say.getClass().getClassLoader(),say.getClass().getInterfaces(),handler);
+        proxy.say("hello world");
     }
 
 

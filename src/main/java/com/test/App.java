@@ -27,6 +27,8 @@ public class App {
 //        Doing proxy = (Doing) Proxy.newProxyInstance(say.getClass().getClassLoader(),say.getClass().getInterfaces(),handler);
 //        proxy.say("hello world");
 
+
+
     }
 
 

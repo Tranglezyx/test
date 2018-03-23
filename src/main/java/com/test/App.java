@@ -1,34 +1,51 @@
 package com.test;
-
-
-import com.sun.xml.internal.bind.v2.util.QNameMap;
-import com.test.dto.Users;
-import com.test.proxy.Doing;
-import com.test.proxy.InvocationHandlerUtils;
-import com.test.proxy.Say;
-import com.test.util.ColumnsFormatUtils;
-import com.test.util.DateUtils;
-
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
-import java.math.BigDecimal;
-import java.text.ParseException;
-import java.util.*;
-
 /**
  * @author Trangle
  * Hello world!
  */
 public class App {
     public static void main(String[] args) {
-        Doing say = new Say();
-        InvocationHandler handler = new InvocationHandlerUtils(say);
-        Doing proxy = (Doing) Proxy.newProxyInstance(say.getClass().getClassLoader(),say.getClass().getInterfaces(),handler);
-        proxy.say("hello world");
+//        Doing say = new Say();
+//        InvocationHandler handler = new InvocationHandlerUtils(say);
+//        Doing proxy = (Doing) Proxy.newProxyInstance(say.getClass().getClassLoader(),say.getClass().getInterfaces(),handler);
+//        proxy.say("hello world");
+
+//        for(long i = 0; i < 10000;i++){
+//            Users users = new Users();
+//            users.setUserName("Trangle");
+//            new Thread(new TestRunable(users)).start();
+//        }
+        for(int i = 0;i < 100;i++){
+            new Thread(new TestRunable()).start();
+        }
+    }
+}
+
+class Utils{
+    private static long L = 1;
+
+    public  static long getLong(){
+        if(L < 100){
+            System.out.println(L);
+            return L++;
+        }
+        return 0;
+    }
+}
+
+class TestRunable implements Runnable{
+
+    public TestRunable(){
+
     }
 
-
+    @Override
+    public void run() {
+        long i = Utils.getLong();
+        while(i <= 100){
+            i = Utils.getLong();
+        }
+    }
 }
 
 

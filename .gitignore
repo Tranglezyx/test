@@ -23,3 +23,5 @@ overlays/
 
 # JRebel
 **/rebel.xml
+
+**/assets/

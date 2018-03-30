@@ -13,6 +13,9 @@ public class CommUtils {
 
     }
 
+    /**
+     * 当前主机对象
+     */
     private static InetAddress ADDRESS;
 
     /**

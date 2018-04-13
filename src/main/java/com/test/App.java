@@ -30,11 +30,13 @@ public class App extends WeChatBot {
 //        proxy.say("hello world");
 
 //        new App(Config.me().autoLogin(true).showTerminal(true)).start();
-        Map<String,String> map = System.getenv();
-        System.out.println(CommUtils.getIp());
-        System.out.println(map.get("USERNAME"));//获取用户名
-        System.out.println(map.get("COMPUTERNAME"));//获取计算机名
-        System.out.println(map.get("USERDOMAIN"));//获取计算机域名
+//        Map<String,String> map = System.getenv();
+//        System.out.println(CommUtils.getIp());
+//        System.out.println(map.get("USERNAME"));//获取用户名
+//        System.out.println(map.get("COMPUTERNAME"));//获取计算机名
+//        System.out.println(map.get("USERDOMAIN"));//获取计算机域名
+
+        System.out.println(0 % 100);
     }
 
     @Bind(msgType = MsgType.TEXT)

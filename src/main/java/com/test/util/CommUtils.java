@@ -1,9 +1,13 @@
 package com.test.util;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.Enumeration;
 import java.util.Formatter;
 import java.util.Locale;
 
@@ -11,6 +15,96 @@ public class CommUtils {
 
     private CommUtils(){
 
+    }
+
+    /**
+     * Return Opertaion System Name;
+     *
+     * @return os name.
+     */
+    public static String getOsName() {
+        String os = "";
+        os = System.getProperty("os.name");
+        return os;
+    }
+
+    /**
+     * Returns the MAC address of the computer.
+     *
+     * @return the MAC address
+     */
+    public static String getMACAddress() {
+        String address = "";
+        String os = getOsName();
+        if (os.startsWith("Windows")) {
+            try {
+                String command = "cmd.exe /c ipconfig /all";
+                Process p = Runtime.getRuntime().exec(command);
+                BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+                String line;
+                while ((line = br.readLine()) != null) {
+                    if (line.indexOf("Physical Address") > 0) {
+                        int index = line.indexOf(":");
+                        index += 2;
+                        address = line.substring(index);
+                        break;
+                    }
+                }
+                br.close();
+                return address.trim();
+            } catch (IOException e) {
+            }
+        } else if (os.startsWith("Linux")) {
+            String command = "/bin/sh -c ifconfig -a";
+            Process p;
+            try {
+                p = Runtime.getRuntime().exec(command);
+                BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+                String line;
+                while ((line = br.readLine()) != null) {
+                    if (line.indexOf("HWaddr") > 0) {
+                        int index = line.indexOf("HWaddr") + "HWaddr".length();
+                        address = line.substring(index);
+                        break;
+                    }
+                }
+                br.close();
+            } catch (IOException e) {
+            }
+        }
+        address = address.trim();
+        return address;
+    }
+
+    /**
+     * 获取Linux下的IP地址
+     * @author yunxiang.zhou01@hand-china.com
+     * @return IP地址
+     * @throws SocketException
+     */
+    public static String getLinuxLocalIp() throws SocketException {
+        String ip = "";
+        try {
+            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
+                NetworkInterface intf = en.nextElement();
+                String name = intf.getName();
+                if (!name.contains("docker") && !name.contains("lo")) {
+                    for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
+                        InetAddress inetAddress = enumIpAddr.nextElement();
+                        if (!inetAddress.isLoopbackAddress()) {
+                            String ipaddress = inetAddress.getHostAddress().toString();
+                            if (!ipaddress.contains("::") && !ipaddress.contains("0:0:") && !ipaddress.contains("fe80")) {
+                                ip = ipaddress;
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (SocketException ex) {
+            ip = "127.0.0.1";
+            ex.printStackTrace();
+        }
+        return ip;
     }
 
     /**

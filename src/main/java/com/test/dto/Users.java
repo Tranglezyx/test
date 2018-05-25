@@ -5,13 +5,16 @@ import com.test.annotation.GeneratedValue;
 import com.test.annotation.Id;
 import com.test.annotation.Table;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by zhouyunxiang on 2017/6/30.
  */
 @Table("users")
-public class Users {
+public class Users implements Serializable{
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @Column("user_id")

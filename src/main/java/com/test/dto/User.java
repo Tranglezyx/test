@@ -9,17 +9,21 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Created by zhouyunxiang on 2017/6/30.
+ * <p>
+ *
+ * </p>
+ *
+ * @author Trangle 2018/07/16 15:13
  */
 @Table("users")
-public class Users implements Serializable{
+public class User extends AuditDomain {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @Column("user_id")
     @GeneratedValue
-    private Integer userId;
+    private Long userId;
 
     @Column("user_name")
     private String userName;
@@ -30,25 +34,44 @@ public class Users implements Serializable{
     private Date creationDate;
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Users)) return false;
-
-        Users users = (Users) o;
-
-        if (!getUserId().equals(users.getUserId())) return false;
-        if (!getUserName().equals(users.getUserName())) return false;
-        if (!getPassword().equals(users.getPassword())) return false;
-        return getCreationDate().equals(users.getCreationDate());
-    }
-
-    @Override
     public int hashCode() {
         int result = getUserId().hashCode();
         result = 31 * result + getUserName().hashCode();
         result = 31 * result + getPassword().hashCode();
         result = 31 * result + getCreationDate().hashCode();
         return result;
+    }
+
+    public User getUser(String name, Long id) {
+        User user = new User();
+        user.setUserName(name);
+        user.setUserId(id);
+        return user;
+    }
+
+    public String testReflect(Object o){
+        return o.toString();
+    }
+
+    public String testReflect(String name, Long id) {
+        return name + id;
+    }
+
+    public String testReflect(Long id, String name) {
+        return id + name;
+    }
+
+    private String getPrivateName() {
+        return userName;
+    }
+
+    String getProtectedName() {
+        return userName;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" + "userId=" + userId + ", userName='" + userName + '\'' + ", password='" + password + '\'' + '}';
     }
 
     public Date getCreationDate() {
@@ -59,16 +82,20 @@ public class Users implements Serializable{
         this.creationDate = creationDate;
     }
 
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public String getUserName() {
         return userName;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public void setUserName(String userName) {
@@ -83,27 +110,7 @@ public class Users implements Serializable{
         this.password = password;
     }
 
-    public Users(Integer userId, String userName) {
-        this.userId = userId;
-        this.userName = userName;
-    }
+    public User() {
 
-    public Users(Integer userId, String userName, String password) {
-        this.userId = userId;
-        this.userName = userName;
-        this.password = password;
-    }
-
-    public Users(){
-
-    }
-
-    @Override
-    public String toString() {
-        return "Users{" +
-                "userId=" + userId +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                '}';
     }
 }

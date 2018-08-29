@@ -18,6 +18,23 @@ public class CommUtils {
     }
 
     /**
+     * 校验多个值中有几个值非空
+     *
+     * @param num 非空的数量
+     * @param objects 值
+     * @return boolean
+     */
+    public static boolean judgeDataNotNull(int num, Object... objects) {
+        int count = 0;
+        for (Object object : objects) {
+            if (object != null) {
+                count++;
+            }
+        }
+        return count == num;
+    }
+
+    /**
      * Return Opertaion System Name;
      *
      * @return os name.

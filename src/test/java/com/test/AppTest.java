@@ -1,12 +1,8 @@
 package com.test;
 
-import com.test.dto.Users;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Unit test for simple App.

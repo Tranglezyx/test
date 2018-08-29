@@ -23,12 +23,12 @@ public class PermissionUtils {
     
     public static String getPermissionSql(String sql,String id) throws JSQLParserException {
         String permissionSql = null;
-        List<Table> tableList = SqlUtils.getAllTableFromSql(sql);
-        // 获取sqlId
-        String sqlId = id.substring(id.lastIndexOf(".") + 1,id.length());
-        // 获得当前用户、角色和当前sql配置的所有数据屏蔽权限信息
-        Map<Table,List<PermissionVO>> permissionTableMap = getAllPermissionVOMap(ROLE_ID,USER_ID,sqlId,tableList);
-        permissionSql = parseSql(sql,permissionTableMap);
+//        List<Table> tableList = SqlUtils.getAllTableFromSql(sql);
+//        // 获取sqlId
+//        String sqlId = id.substring(id.lastIndexOf(".") + 1,id.length());
+//        // 获得当前用户、角色和当前sql配置的所有数据屏蔽权限信息
+//        Map<Table,List<PermissionVO>> permissionTableMap = getAllPermissionVOMap(ROLE_ID,USER_ID,sqlId,tableList);
+//        permissionSql = parseSql(sql,permissionTableMap);
         return permissionSql;
     }
 

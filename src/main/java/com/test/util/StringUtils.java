@@ -17,7 +17,6 @@ public class StringUtils {
     /**
      * 正则匹配，5表示为CustomUserDetails中变量长度最短的email,14为最长的organizationId的长度
      */
-//    private static final String PATTERN_REGEX = "#\\{(.{5,14})\\}";
     private static final String PATTERN_REGEX = "#\\{(.+?)\\}";
     private static final Pattern PATTERN = Pattern.compile(PATTERN_REGEX);
     private static final String START_WITH = "#{";

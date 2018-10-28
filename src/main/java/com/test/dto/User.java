@@ -20,6 +20,15 @@ public class User extends AuditDomain {
 
     private static final long serialVersionUID = 1L;
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
     @Id
     @Column("user_id")
     @GeneratedValue
@@ -33,13 +42,14 @@ public class User extends AuditDomain {
 
     private Date creationDate;
 
-    @Override
-    public int hashCode() {
-        int result = getUserId().hashCode();
-        result = 31 * result + getUserName().hashCode();
-        result = 31 * result + getPassword().hashCode();
-        result = 31 * result + getCreationDate().hashCode();
-        return result;
+    private Boolean bool;
+
+    public Boolean getBool() {
+        return bool;
+    }
+
+    public void setBool(Boolean bool) {
+        this.bool = bool;
     }
 
     public User getUser(String name, Long id) {
@@ -67,11 +77,6 @@ public class User extends AuditDomain {
 
     String getProtectedName() {
         return userName;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" + "userId=" + userId + ", userName='" + userName + '\'' + ", password='" + password + '\'' + '}';
     }
 
     public Date getCreationDate() {
@@ -112,5 +117,10 @@ public class User extends AuditDomain {
 
     public User() {
 
+    }
+
+    public User(Long userId, String userName) {
+        this.userId = userId;
+        this.userName = userName;
     }
 }

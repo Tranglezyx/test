@@ -29,6 +29,10 @@ public class User extends AuditDomain {
                 '}';
     }
 
+    public Class clazz(){
+        return super.getClass();
+    }
+
     @Id
     @Column("user_id")
     @GeneratedValue

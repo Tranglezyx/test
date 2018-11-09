@@ -1,36 +1,36 @@
 package com.test;
 
-import java.lang.reflect.Field;
-import java.util.*;
-import java.util.function.ToLongFunction;
+import org.apache.commons.io.IOUtils;
 
-import com.test.annotation.Column;
-import com.test.annotation.Table;
-import com.test.dto.User;
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.reflect.FieldUtils;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+import javax.script.SimpleBindings;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * @author Trangle Hello world!
  */
 public class App {
 
-    public static void main(String[] args) {
-        List<User> userList = new ArrayList<>();
-        userList.add(new User(2L, "QQQ"));
-        userList.add(new User(5L, "WWW"));
-        userList.add(new User(1L, "EEE"));
-        userList.add(new User(1L, "AAA"));
+    public static void main(String[] args) throws IOException, ScriptException {
+        long startTime = System.currentTimeMillis();
 
-        Map<String, User> map = new HashMap();
-        Map<String,User> linkMap = new LinkedHashMap<>();
-        for (User user : userList) {
-            map.put(user.getUserName(), user);
-            linkMap.put(user.getUserName(), user);
-        }
-        System.out.println(userList);
-        userList.sort(Comparator.comparingLong((ToLongFunction<? super User>) User::getUserId));
-        System.out.println(userList);
-        System.out.println(userList.get(0).getBool());
+        String script = IOUtils.toString(Thread.currentThread().getContextClassLoader()
+                .getResourceAsStream("test.js"), "utf-8");
+        InputStreamReader babelReader = new InputStreamReader(Thread.currentThread().getContextClassLoader()
+                .getResourceAsStream("script/js/babel.min.js"), "utf-8");
+        System.out.println("构建解析babel.min.js输入流费时：" + (System.currentTimeMillis() - startTime));
+
+        ScriptEngine engine = new ScriptEngineManager().getEngineByMimeType("text/javascript");
+        System.out.println("构建js引擎费时：" + (System.currentTimeMillis() - startTime));
+        SimpleBindings bindings = new SimpleBindings();
+        engine.eval(babelReader, bindings);
+        System.out.println("js引擎解析babel.min.js费时：" + (System.currentTimeMillis() - startTime));
+        bindings.put("input", script);
+        Object output = engine.eval("Babel.transform(input, { presets: ['es2015', 'react', 'stage-0'] }).code", bindings);
+        System.out.println("js引擎解析代码费时：" + (System.currentTimeMillis() - startTime));
+        System.out.println(output);
     }
 }

@@ -3,6 +3,8 @@ package com.test;
 import com.test.annotation.GeneratedValue;
 import com.test.annotation.Id;
 import com.test.dto.User;
+import net.sf.jsqlparser.JSQLParserException;
+import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -27,7 +29,7 @@ import java.util.Properties;
  */
 public class App {
 
-    public static void main(String[] args) throws IOException, ScriptException {
+    public static void main(String[] args) throws IOException, ScriptException, JSQLParserException {
 //        long startTime = System.currentTimeMillis();
 //
 //        String script = IOUtils.toString(Thread.currentThread().getContextClassLoader()
@@ -52,7 +54,7 @@ public class App {
 
     public static void comsumer() {
         Properties properties = new Properties();
-        properties.put("bootstrap.servers", "kafka.srm.lkk.com:9092");
+        properties.put("bootstrap.servers", "47.106.119.55:9092");
         properties.put("group.id", "group-1");
         properties.put("enable.auto.commit", "true");
         properties.put("auto.commit.interval.ms", "1000");
@@ -74,7 +76,7 @@ public class App {
 
     public static void producer() {
         Properties properties = new Properties();
-        properties.put("bootstrap.servers", "kafka.srm.lkk.com:9092");
+        properties.put("bootstrap.servers", "47.106.119.55:9092");
         properties.put("acks", "all");
         properties.put("retries", 0);
         properties.put("batch.size", 16384);
@@ -85,8 +87,8 @@ public class App {
         Producer<String, String> producer = null;
         try {
             producer = new KafkaProducer<String, String>(properties);
-            for (int i = 0; i < 100; i++) {
-                String msg = "Message " + i;
+            for (int i = 0; i < 3; i++) {
+                String msg = "Message==================== " + i;
                 producer.send(new ProducerRecord<String, String>("HelloWorld", msg));
                 System.out.println("Sent:" + msg);
             }

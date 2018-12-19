@@ -3,6 +3,8 @@ package com.test;
 import com.test.annotation.GeneratedValue;
 import com.test.annotation.Id;
 import com.test.dto.User;
+import com.test.kafka.KafkaTest;
+import com.test.zookeeper.ZookeeperTest;
 import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import org.apache.commons.io.IOUtils;
@@ -13,6 +15,7 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.zookeeper.KeeperException;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -29,7 +32,7 @@ import java.util.Properties;
  */
 public class App {
 
-    public static void main(String[] args) throws IOException, ScriptException, JSQLParserException {
+    public static void main(String[] args) throws IOException, ScriptException, JSQLParserException, KeeperException, InterruptedException {
 //        long startTime = System.currentTimeMillis();
 //
 //        String script = IOUtils.toString(Thread.currentThread().getContextClassLoader()
@@ -48,55 +51,14 @@ public class App {
 //        System.out.println("js引擎解析代码费时：" + (System.currentTimeMillis() - startTime));
 //        System.out.println(output);
 
-//        producer();
-        comsumer();
+//        KafkaTest.producer();
+//        KafkaTest.consumer();
+
+        ZookeeperTest dm = new ZookeeperTest();
+        dm.createZKInstance();
+        dm.ZKOperations();
+        dm.ZKClose();
     }
 
-    public static void comsumer() {
-        Properties properties = new Properties();
-        properties.put("bootstrap.servers", "47.106.119.55:9092");
-        properties.put("group.id", "group-1");
-        properties.put("enable.auto.commit", "true");
-        properties.put("auto.commit.interval.ms", "1000");
-        properties.put("auto.offset.reset", "earliest");
-        properties.put("session.timeout.ms", "30000");
-        properties.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-        properties.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 
-        KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<>(properties);
-        kafkaConsumer.subscribe(Arrays.asList("HelloWorld"));
-//        while (true) {
-        ConsumerRecords<String, String> records = kafkaConsumer.poll(100);
-        for (ConsumerRecord<String, String> record : records) {
-            System.out.printf("offset = %d, value = %s", record.offset(), record.value());
-            System.out.println();
-        }
-//        }
-    }
-
-    public static void producer() {
-        Properties properties = new Properties();
-        properties.put("bootstrap.servers", "47.106.119.55:9092");
-        properties.put("acks", "all");
-        properties.put("retries", 0);
-        properties.put("batch.size", 16384);
-        properties.put("linger.ms", 1);
-        properties.put("buffer.memory", 33554432);
-        properties.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        properties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        Producer<String, String> producer = null;
-        try {
-            producer = new KafkaProducer<String, String>(properties);
-            for (int i = 0; i < 3; i++) {
-                String msg = "Message==================== " + i;
-                producer.send(new ProducerRecord<String, String>("HelloWorld", msg));
-                System.out.println("Sent:" + msg);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        } finally {
-            producer.close();
-        }
-    }
 }

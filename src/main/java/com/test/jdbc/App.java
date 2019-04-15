@@ -8,12 +8,13 @@ import java.sql.*;
 public class App {
 
     public static void main(String[] args) throws SQLException {
-        testMysqlBatchInsert();
-//        testSqlserverBatchInsert();
+//        testMysqlBatchInsert();
+        testSqlserverBatchInsert();
     }
 
     public static void testSqlserverBatchInsert() throws SQLException {
         String insertSql = "insert into test_1(code,num) values ('aa','aa'),('bb','bb'),('cc','cc')";
+        JDBCUtils.useMysqlConstants();
         Connection conn = JDBCUtils.getConnnection();
         PreparedStatement pstm = conn.prepareStatement(insertSql);
         pstm.execute(insertSql, Statement.RETURN_GENERATED_KEYS);

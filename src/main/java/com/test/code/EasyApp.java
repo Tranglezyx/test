@@ -8,9 +8,6 @@ import java.io.IOException;
 public class EasyApp {
 
     public static void main(String[] args) throws IOException {
-        Class clazz = EasySolution.class;
-        System.out.println(clazz.getClassLoader().getSystemResource("").getFile().toString());
-        System.out.println(ClassLoader.getSystemResource("").getFile());
-
+        System.out.println(EasySolution.maxProfit121(new int[]{4,3,2,1,1}));
     }
 }

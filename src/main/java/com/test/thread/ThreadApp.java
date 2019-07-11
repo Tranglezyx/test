@@ -5,6 +5,10 @@ package com.test.thread;
  */
 public class ThreadApp {
 
+    public static  int num = 1;
+
+    public static boolean flag = true;
+
     public static void main(String[] args) {
 //        Thread thread = new TestThread();
 //        Thread thread2 = new TestThread();
@@ -20,16 +24,34 @@ public class ThreadApp {
 //        thread5.start();
 //        thread6.start();
 
-        Thread thread = new Thread(new VolatileRunnable());
+//        Thread thread = new Thread(new VolatileRunnable());
+//
+//        Thread thread1 = new Thread(() -> {
+//            while (ThreadUtils.num < 100) {
+//            }
+//            ThreadUtils.flag = false;
+//            System.out.println(ThreadUtils.num + "  ======");
+//        });
+//
+//        thread.start();
+//        thread1.start();
 
         Thread thread1 = new Thread(() -> {
-            while (ThreadUtils.num < 100) {
+            while(flag){
+                num++;
             }
-            ThreadUtils.flag = false;
-            System.out.println(ThreadUtils.num + "  ======");
+            System.out.println("add thread : " + num);
         });
 
-        thread.start();
+        Thread thread2 = new Thread(() -> {
+            while(num < 1000){
+
+            }
+            flag = false;
+            System.out.println("listener thread : " + num);
+        });
+
         thread1.start();
+        thread2.start();
     }
 }

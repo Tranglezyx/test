@@ -9,7 +9,7 @@ public class ThreadUtils {
 
     public static final ConcurrentHashMap<Long, Object> map = new ConcurrentHashMap(100000);
 
-    public static int num = 0;
+    public static volatile int num = 0;
 
     public static volatile boolean flag = true;
 

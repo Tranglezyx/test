@@ -1,6 +1,9 @@
 package com.test.code;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author trangle
@@ -8,6 +11,7 @@ import java.io.IOException;
 public class EasyApp {
 
     public static void main(String[] args) throws IOException {
-        System.out.println(EasySolution.maxProfit121(new int[]{4,3,2,1,1}));
+        TreeNode root = TreeUtils.generateTree(1,2,2,null,3,null,3);
+        System.out.println(TreeUtils.isSymmetric(root));
     }
 }

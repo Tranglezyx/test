@@ -1,5 +1,9 @@
 package com.test.code;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 /**
  * @author trangle
  */
@@ -29,30 +33,6 @@ public class EasySolution {
     }
 
     /**
-     * 相同的树
-     * <p>
-     * 给定两个二叉树，编写一个函数来检验它们是否相同。
-     * 如果两个树在结构上相同，并且节点具有相同的值，则认为它们是相同的。
-     *
-     * @param p
-     * @param q
-     * @return
-     */
-    public static boolean isSameTree(TreeNode p, TreeNode q) {
-        if (p == null && q == null) {
-            return true;
-        }
-        if (p == null || q == null) {
-            return false;
-        }
-        if (p.val == q.val && isSameTree(p.left, q.left) && isSameTree(p.right, q.right)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
      * 121. 买卖股票的最佳时机
      * <p>
      * 给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。
@@ -65,16 +45,6 @@ public class EasySolution {
      * @return
      */
     public static int maxProfit121(int[] prices) {
-//        int money = 0;
-//        for (int i = 0; i < prices.length; i++) {
-//            for (int j = i + 1; j < prices.length; j++) {
-//                if (prices[j] > prices[i]) {
-//                    money = Math.max(money, prices[j] - prices[i]);
-//                }
-//            }
-//        }
-//        return money;
-
         if (prices.length == 0) return 0;
 
         int minValue = prices[0]; // 股票最低价
@@ -131,13 +101,21 @@ public class EasySolution {
         return maxSubSum;
     }
 
-    static class TreeNode {
-        Integer val;
-        TreeNode left;
-        TreeNode right;
-
-        TreeNode(Integer val) {
-            this.val = val;
+    /**
+     * 判断数组是否对称
+     *
+     * @param valueList
+     * @return
+     */
+    public static boolean isSymmetry(List<Integer> valueList) {
+        for (int i = 0, j = valueList.size() - 1; i < valueList.size(); i++, j--) {
+            if (!Objects.equals(valueList.get(i),valueList.get(j))) {
+                return false;
+            }
+            if(j <= i){
+                break;
+            }
         }
+        return true;
     }
 }

@@ -1,12 +1,7 @@
 package com.test;
 
 
-import com.test.dto.User;
-import org.apache.commons.lang3.StringUtils;
-
-import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author trangle
@@ -70,7 +65,7 @@ public class App {
 //        test();
 
         List list = new LinkedList();
-        list.get
+
     }
 
     public static void test(){

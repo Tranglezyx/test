@@ -3,6 +3,7 @@ package com.test.collection;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author trangle
@@ -17,17 +18,19 @@ public class ArrayListTest {
         stringList.add("C");
         stringList.add("D");
         stringList.add("E");
-        Iterator<String> iterator = stringList.iterator();
-        while(iterator.hasNext()){
-            String s = iterator.next();
-            if("C".equals(s)){
-                iterator.remove();
-            }
-        }
-        iterator = stringList.iterator();
-        while(iterator.hasNext()){
-            String s = iterator.next();
-            System.out.println(s);
-        }
+//        Iterator<String> iterator = stringList.iterator();
+//        while(iterator.hasNext()){
+//            String s = iterator.next();
+//            if("C".equals(s)){
+//                iterator.remove();
+//            }
+//        }
+//        iterator = stringList.iterator();
+//        while(iterator.hasNext()){
+//            String s = iterator.next();
+//            System.out.println(s);
+//        }
+        stringList = stringList.stream().filter(s -> !s.equals("A")).collect(Collectors.toList());
+        System.out.println(stringList);
     }
 }

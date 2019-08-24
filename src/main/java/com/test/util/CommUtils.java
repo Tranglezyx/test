@@ -18,6 +18,15 @@ public class CommUtils {
     }
 
     /**
+     * 得到当前classpath路径
+     *
+     * @return
+     */
+    public static String getClasspathUrl(){
+        return CommUtils.class.getClassLoader().getResource("").getPath();
+    }
+
+    /**
      * 校验多个值中有几个值非空
      *
      * @param num 非空的数量

@@ -1,0 +1,9 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:esb="http://w3.ibm.com/gbs/ais/ei/esb">
+    <soap:Body>
+        <esb:RESPONSE>
+            <esb:RETURN_CODE>S000A000</esb:RETURN_CODE>
+            <esb:RETURN_DESC>处理成功</esb:RETURN_DESC>
+            <esb:RETURN_DATA xmlns:ns1="http://www.ecp.crc.com.cn/" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"/>
+        </esb:RESPONSE>
+    </soap:Body>
+</soap:Envelope>

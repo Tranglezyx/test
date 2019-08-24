@@ -1,0 +1,18 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:esb="http://w3.ibm.com/gbs/ais/ei/esb">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <esb:REQUEST>
+            <esb:ESB_ATTRS>
+                <esb:ESB_SID>0070</esb:ESB_SID><!---由ESB提供-->
+                <esb:ESB_USER>0070</esb:ESB_USER><!---由ESB提供-->
+                <esb:ESB_PWD>86AA4C53241408725F464C411B9FBBE2</esb:ESB_PWD><!---由ESB提供-->
+                <esb:ESB_SN>#{ESB_SN}</esb:ESB_SN><!--- 24位，宇宙唯一，源系统产生-->
+                <esb:MAC></esb:MAC>
+                <esb:ESB_SERVICE_ID>00520000000002</esb:ESB_SERVICE_ID><!---由ESB提供-->
+            </esb:ESB_ATTRS>
+            <esb:REQUEST_DATA>
+                #{REQUEST_DATA}
+            </esb:REQUEST_DATA><!---业务报文base64字符串-->
+        </esb:REQUEST>
+    </soapenv:Body>
+</soapenv:Envelope>

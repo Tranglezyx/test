@@ -10,6 +10,72 @@ import java.util.Objects;
 public class EasySolution {
 
     /**
+     * 打印全部
+     *             *
+     *         * * *
+     *     * * * * *
+     * * * * * * * *
+     *     * * * * *
+     *         * * *
+     *             *
+     *
+     * @param n
+     */
+    public static void printAll(int n) {
+        for (int i = 1; i <= n; i++) {
+            printLine(i, n);
+        }
+        for (int i = n - 1; i >= 1; i--) {
+            printLine(i, n);
+        }
+    }
+
+    /**
+     * 打印每一行
+     *
+     * @param n   当前行数
+     * @param num 对称图形的上半部分总行数
+     */
+    public static void printLine(int n, int num) {
+        // 打印空格数量
+        int blankAccount = getPrintAllNumbers(num) - getPrintAllNumbers(n);
+        for (int i = 1; i <= blankAccount; i++) {
+            System.out.print(" ");
+        }
+
+        // 当前行需要打印*的个数
+        int account = getPrintNumbers(n);
+
+        for (int i = 1; i <= account; i++) {
+            System.out.print("*");
+            if (i != account) {
+                System.out.print(" ");
+            }
+        }
+        System.out.println();
+    }
+
+    /**
+     * 第n行需要打印*的个数
+     *
+     * @param n
+     * @return
+     */
+    public static int getPrintNumbers(int n) {
+        return 2 * n - 1;
+    }
+
+    /**
+     * 第n行自第一个*开始需要打印的总数量
+     *
+     * @param n
+     * @return
+     */
+    public static int getPrintAllNumbers(int n) {
+        return getPrintNumbers(n) + getPrintNumbers(n) - 1;
+    }
+
+    /**
      * 两数之和
      * <p>
      * 给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。
@@ -109,10 +175,10 @@ public class EasySolution {
      */
     public static boolean isSymmetry(List<Integer> valueList) {
         for (int i = 0, j = valueList.size() - 1; i < valueList.size(); i++, j--) {
-            if (!Objects.equals(valueList.get(i),valueList.get(j))) {
+            if (!Objects.equals(valueList.get(i), valueList.get(j))) {
                 return false;
             }
-            if(j <= i){
+            if (j <= i) {
                 break;
             }
         }

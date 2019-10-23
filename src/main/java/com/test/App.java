@@ -1,7 +1,7 @@
 package com.test;
 
 
-import com.test.util.CommUtils;
+import com.test.entity.User;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -12,11 +12,8 @@ import java.security.NoSuchAlgorithmException;
 public class App {
 
     public static void main(String[] args) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-        String str = CommUtils.sha256("111111");
-        System.out.println(CommUtils.encoderPasswordByECP("ADMIN","111111"));
-        System.out.println(CommUtils.sha256("CRCLDAP+ADMIN+" + str));
-        System.out.println("CB179A32B377E2251BD507F1A90D7CF38C96FD602C478DC90B739868210E9B43");
-
+        User user = new User();
+        user.test();
     }
 
 

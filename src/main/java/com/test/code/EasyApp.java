@@ -1,9 +1,8 @@
 package com.test.code;
 
+import com.test.code.solution.EasySolution;
+
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author trangle

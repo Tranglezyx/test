@@ -1,6 +1,5 @@
-package com.test.code;
+package com.test.code.solution;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 

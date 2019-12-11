@@ -4,10 +4,14 @@ import com.test.annotation.Column;
 import com.test.annotation.GeneratedValue;
 import com.test.annotation.Id;
 import com.test.annotation.Table;
+import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.FieldNameConstants;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -18,6 +22,7 @@ import java.util.Date;
  */
 @Table("users")
 @Data
+@FieldNameConstants
 public class User extends AuditDomain{
 
     private static final long serialVersionUID = 1L;
@@ -71,5 +76,15 @@ public class User extends AuditDomain{
     public User(String userName, BigDecimal money) {
         this.userName = userName;
         this.money = money;
+    }
+
+    public static List<User> getDefaultUserListInfo(){
+        List<User> userList = new ArrayList<>();
+        userList.add(new User("qqq",new BigDecimal(2)));
+        userList.add(new User("eee",new BigDecimal(2)));
+        userList.add(new User("ffd",new BigDecimal(2)));
+        userList.add(new User("ddd",new BigDecimal(2)));
+        userList.add(new User("qqaaaq",new BigDecimal(2)));
+        return userList;
     }
 }

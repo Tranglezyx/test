@@ -7,9 +7,9 @@ public class Snowflake {
     public static void main(String[] args) {
         Snowflake idWorker = new Snowflake(0, 0);
         long startTime = System.currentTimeMillis();
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 10000000; i++) {
             long id = idWorker.nextId();
-            System.out.println(id);
+//            System.out.println(id);
 //            System.out.println(Long.toBinaryString(id));
         }
         System.out.println("花费时间 : " + (System.currentTimeMillis() - startTime) / 1000);
@@ -69,7 +69,7 @@ public class Snowflake {
             throw new IllegalArgumentException(String.format("worker Id can't be greater than %d or less than 0", maxWorkerId));
         }
         if (dataCenterId > maxDataCenterId || dataCenterId < 0) {
-            throw new IllegalArgumentException(String.format("datacenter Id can't be greater than %d or less than 0", maxDataCenterId));
+            throw new IllegalArgumentException(String.format("dataCenter Id can't be greater than %d or less than 0", maxDataCenterId));
         }
         this.workerId = workerId;
         this.dataCenterId = dataCenterId;

@@ -1,4 +1,6 @@
-package com.test.code;
+package com.test.code.util;
+
+import com.test.code.entity.TreeNode;
 
 import java.util.LinkedList;
 import java.util.List;

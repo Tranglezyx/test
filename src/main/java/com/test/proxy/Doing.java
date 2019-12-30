@@ -1,5 +1,6 @@
 package com.test.proxy;
 
 public interface Doing {
-    void say(String s);
+
+    void doing(String s);
 }

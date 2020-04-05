@@ -81,6 +81,7 @@ public class User extends AuditDomain{
     public static List<User> getDefaultUserListInfo(){
         List<User> userList = new ArrayList<>();
         userList.add(new User("qqq",new BigDecimal(2)));
+        userList.add(new User("qqq",new BigDecimal(3)));
         userList.add(new User("eee",new BigDecimal(2)));
         userList.add(new User("ffd",new BigDecimal(2)));
         userList.add(new User("ddd",new BigDecimal(2)));

@@ -39,24 +39,29 @@ public class DateUtils {
         return str;
     }
 
-    public static String getMonthFirstDay() {
-        Calendar calendar = Calendar.getInstance();
-//        calendar.setTime(new Date());
-//        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
-        calendar.set(2017,11,1);
-        SimpleDateFormat firstDay= new SimpleDateFormat("yyyy-MM-dd");
-        return  firstDay.format(calendar.getTime());
+    /**
+     * 获得当前月的起始日期
+     *
+     * @return
+     */
+    public static Date getNowMonthStartDay() {
+        return getMonthStartDay(new Date());
     }
 
     /**
-     * 得到日期字符串的当月的首天，字符串类型只能为 yyyy-MM-dd 结构
-     * @param dateStr
+     * 获得参数时间所在月的起始日期
+     *
+     * @param date 时间
      * @return
      */
-    public static Date getFirstDayOfMonth(String dateStr){
-        String[] date = dateStr.split("-");
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Integer.parseInt(date[0]),Integer.parseInt(date[1]) - 1,1,0,0,0);
-        return calendar.getTime();
+    public static Date getMonthStartDay(Date date) {
+        Calendar now = Calendar.getInstance();
+        now.setTime(date);
+        now.set(Calendar.DAY_OF_MONTH, 1);
+        now.set(Calendar.HOUR_OF_DAY, 0);
+        now.set(Calendar.MINUTE, 0);
+        now.set(Calendar.SECOND, 0);
+        now.set(Calendar.MILLISECOND, 0);
+        return now.getTime();
     }
 }

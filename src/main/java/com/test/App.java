@@ -1,23 +1,10 @@
 package com.test;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.esen.ecascore.casserver.LoginFunc;
-import com.esen.ecascore.casserver.login.CasLoginFunc;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.test.annotation.Column;
 import com.test.entity.User;
-import com.test.util.AnnotationUtils;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.reflect.FieldUtils;
-import org.apache.commons.lang3.time.DateFormatUtils;
-import org.apache.commons.lang3.time.DateUtils;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Proxy;
 import java.text.ParseException;
-import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**

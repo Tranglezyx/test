@@ -3,10 +3,7 @@ package com.test.code.util;
 import com.test.code.entity.TreeNode;
 
 import java.sql.SQLOutput;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * @author trangle
@@ -40,29 +37,24 @@ public class TreeUtils {
             return null;
         }
         TreeNode root = new TreeNode(valueQueue.poll());
-        LinkedList<TreeNode> nodeQueue = new LinkedList<>();
-        nodeQueue.offer(root);
+        Queue<TreeNode> children = new LinkedList<>();
+        children.add(root);
+        // 1,null,2,3,4,null,5,null,6,7,8
         while (!valueQueue.isEmpty()) {
-            LinkedList tempList = new LinkedList();
-            while (!nodeQueue.isEmpty()) {
-                TreeNode node = nodeQueue.poll();
-                if (valueQueue.size() >= 2) {
-                    node.left = new TreeNode(valueQueue.poll());
-                    node.right = new TreeNode(valueQueue.poll());
-                    if (node.left != null) {
-                        tempList.offer(node.left);
-                    }
-                    if (node.right != null) {
-                        tempList.offer(node.right);
-                    }
-                } else if (valueQueue.size() == 1) {
-                    node.left = new TreeNode(valueQueue.poll());
-                    if (node.left != null) {
-                        tempList.offer(node.left);
-                    }
-                }
+            Integer value = valueQueue.poll();
+            TreeNode parent = children.poll();
+            TreeNode child = new TreeNode(value);
+            if (parent.left == null) {
+                parent.left = child;
+            } else if (parent.right == null) {
+                parent.right = child;
             }
-            nodeQueue = tempList;
+            if (parent.left == null || parent.right == null) {
+                children.add(parent);
+            }
+            if (value != null) {
+                children.add(child);
+            }
         }
         return root;
     }

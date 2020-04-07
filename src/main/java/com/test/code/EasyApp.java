@@ -12,7 +12,7 @@ import java.io.IOException;
 public class EasyApp {
 
     public static void main(String[] args) throws IOException {
-        TreeNode root = TreeUtils.generateTree(1,null,2,3,4,null,5,null,6,7,8);
+        TreeNode root = TreeUtils.generateTree(2,3,null,1,6,3,8,null,null,1);
         System.out.println(TreeUtils.getTreeDepth(root));
         System.out.println(TreeUtils.getTreeMinDepth(root));
         TreeUtils.show(root);

@@ -37,9 +37,8 @@ public class TreeUtils {
             return null;
         }
         TreeNode root = new TreeNode(valueQueue.poll());
-        Queue<TreeNode> children = new LinkedList<>();
+        Deque<TreeNode> children = new LinkedList<>();
         children.add(root);
-        // 1,null,2,3,4,null,5,null,6,7,8
         while (!valueQueue.isEmpty()) {
             Integer value = valueQueue.poll();
             TreeNode parent = children.poll();
@@ -50,10 +49,10 @@ public class TreeUtils {
                 parent.right = child;
             }
             if (parent.left == null || parent.right == null) {
-                children.add(parent);
+                children.offerFirst(parent);
             }
             if (value != null) {
-                children.add(child);
+                children.offerLast(child);
             }
         }
         return root;

@@ -16,15 +16,7 @@ public class TreeUtils {
      * @param values
      */
     public static TreeNode generateTree(Integer... values) {
-        Queue<Integer> queue = new LinkedList<>();
-        for (int i = 0; i < values.length; i++) {
-            if (values[i] == null) {
-                queue.offer(null);
-            } else {
-                queue.offer(new Integer(values[i]));
-            }
-        }
-        return generateTree(queue);
+        return generateTree(new LinkedList<>(Arrays.asList(values)));
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.test.code.util;
 
+import com.sun.corba.se.impl.ior.ObjectAdapterIdNumber;
 import com.test.code.entity.TreeNode;
 
 import java.sql.SQLOutput;
@@ -191,21 +192,33 @@ public class TreeUtils {
      * @return
      */
     public static boolean isBalanced(TreeNode root) {
-        return false;
+        if (root == null) {
+            return true;
+        }
+        if (Math.abs(getTreeMaxDepth(root.left) - getTreeMaxDepth(root.right)) > 1) {
+            return false;
+        }
+        return isBalanced(root) && isBalanced(root.left) && isBalanced(root.right);
     }
 
     /**
-     * 用于获得树的层数
+     * 用于获得树的最大层数
      *
      * @param root
      * @return
      */
-    public static int getTreeDepth(TreeNode root) {
-        return root == null ? 0 : (1 + Math.max(getTreeDepth(root.left), getTreeDepth(root.right)));
+    public static int getTreeMaxDepth(TreeNode root) {
+        return root == null || root.val == null ? 0 : (1 + Math.max(getTreeMaxDepth(root.left), getTreeMaxDepth(root.right)));
     }
 
+    /**
+     * 获得树的最小层数
+     *
+     * @param root
+     * @return
+     */
     public static int getTreeMinDepth(TreeNode root) {
-        return root == null ? 0 : (1 + Math.min(getTreeMinDepth(root.left), getTreeMinDepth(root.right)));
+        return root == null || root.val == null ? 0 : (1 + Math.min(getTreeMinDepth(root.left), getTreeMinDepth(root.right)));
     }
 
     /**
@@ -216,7 +229,7 @@ public class TreeUtils {
     public static void show(TreeNode root) {
         if (root == null) System.out.println("EMPTY!");
         // 得到树的深度
-        int treeDepth = getTreeDepth(root);
+        int treeDepth = getTreeMaxDepth(root);
 
         // 最后一行的宽度为2的（n - 1）次方乘3，再加1
         // 作为整个二维数组的宽度

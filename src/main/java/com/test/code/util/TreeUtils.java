@@ -197,8 +197,9 @@ public class TreeUtils {
         }
         if (Math.abs(getTreeMaxDepth(root.left) - getTreeMaxDepth(root.right)) > 1) {
             return false;
+        } else {
+            return isBalanced(root.left) && isBalanced(root.right);
         }
-        return isBalanced(root) && isBalanced(root.left) && isBalanced(root.right);
     }
 
     /**

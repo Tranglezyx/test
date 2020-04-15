@@ -1,5 +1,7 @@
 package com.test.code.solution;
 
+import com.test.code.entity.ListNode;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -182,5 +184,9 @@ public class EasySolution {
             }
         }
         return true;
+    }
+
+    public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        return null;
     }
 }

@@ -1,4 +1,4 @@
-package com.test.proxy;
+package com.test.design.patterns.proxy;
 
 import java.lang.reflect.Proxy;
 

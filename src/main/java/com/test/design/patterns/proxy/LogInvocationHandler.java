@@ -2,19 +2,24 @@ package com.test.design.patterns.proxy;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 
-public class DynamicProxy implements InvocationHandler {
+public class LogInvocationHandler implements InvocationHandler {
 
     private Object proxy;
 
-    public DynamicProxy(Object proxy) {
+    public LogInvocationHandler(Object proxy) {
         this.proxy = proxy;
     }
 
     @Override
     public Object invoke(Object obj, Method method, Object[] args) throws Throwable {
-        System.out.println("代理---");
+        System.out.println("日志代理---");
         // 反射执行
         return method.invoke(proxy, args);
+    }
+
+    public Object getProxy() {
+        return Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), proxy.getClass().getInterfaces(), this);
     }
 }

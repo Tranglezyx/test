@@ -13,7 +13,7 @@ import java.util.UUID;
 public class EasyApp {
 
     public static void main(String[] args) throws IOException {
-        TreeNode root = TreeUtils.generateTree(1,2,2,3,3,3,3,4,4,4,4,4,4,null,null,5,5);
+        TreeNode root = TreeUtils.generateTree(3,9,20,null,null,15,7);
         System.out.println(TreeUtils.getTreeMaxDepth(root));
         System.out.println(TreeUtils.getTreeMinDepth(root));
         TreeUtils.show(root);

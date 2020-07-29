@@ -59,8 +59,8 @@ public class User extends AuditDomain{
 
     public User getUser(String name, Long id) {
         User user = new User();
-        user.setUserName(name);
-        user.setUserId(id);
+//        user.setUserName(name);
+//        user.setUserId(id);
         return user;
     }
 

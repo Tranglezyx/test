@@ -15,9 +15,33 @@ import java.util.regex.Pattern;
  * description
  * </p>
  *
- * @author yunxiang.zhou01@hand-china.com 2018/08/01 16:28
+ * @author trangle
  */
 public class StringUtils {
+
+    /**
+     * 下划线转驼峰
+     *
+     * @param para
+     * @return
+     */
+    public static String underlineToHump(String para){
+        StringBuilder result=new StringBuilder();
+        String a[]=para.split("_");
+        for(String s:a){
+            if (!para.contains("_")) {
+                result.append(s);
+                continue;
+            }
+            if(result.length()==0){
+                result.append(s.toLowerCase());
+            }else{
+                result.append(s.substring(0, 1).toUpperCase());
+                result.append(s.substring(1).toLowerCase());
+            }
+        }
+        return result.toString();
+    }
 
     /**
      * MD5加密

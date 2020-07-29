@@ -20,6 +20,6 @@ public class LogInvocationHandler implements InvocationHandler {
     }
 
     public Object getProxy() {
-        return Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), proxy.getClass().getInterfaces(), this);
+        return Proxy.newProxyInstance(this.getClass().getClassLoader(), proxy.getClass().getInterfaces(), this);
     }
 }

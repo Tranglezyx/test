@@ -23,7 +23,8 @@ public class ColumnsFormatUtils {
 
     /**
      * 将数据库带下划线形式的字段转化为Java dto类型的字段，如PUSH_ITF_FLAG，转化后的结果为pushItfFlag
-     * @Author yunxiang.zhou01@hand-china.com
+     *
+     * @author zhouyx
      * @param dbColumnsTypeName
      * @return
      */
@@ -42,7 +43,7 @@ public class ColumnsFormatUtils {
 
     /**
      * 将形参首字母大写,其他字母全部小写返回,如参数为NAME，name，返回结果为Name
-     * @Author yunxiang.zhou01@hand-china.com
+     *
      * @param s
      * @return
      */

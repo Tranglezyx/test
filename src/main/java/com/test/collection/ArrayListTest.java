@@ -22,7 +22,7 @@ public class ArrayListTest {
 
     public static void sortedTest() {
         initUserList();
-        userList = userList.stream().sorted(Comparator.comparing(User::getMoney)).collect(Collectors.toList());
+//        userList = userList.stream().sorted(Comparator.comparing(User::getMoney)).collect(Collectors.toList());
     }
 
     public static void filterTest() {

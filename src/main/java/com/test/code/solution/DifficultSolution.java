@@ -11,7 +11,7 @@ public class DifficultSolution {
      * 设计一个算法来计算你所能获取的最大利润。你最多可以完成 两笔 交易。
      * <p>
      * 注意: 你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。
-     * <p>
+     *
      * 示例 1:
      * <p>
      * 输入: [3,3,5,0,0,3,1,4]
@@ -26,7 +26,7 @@ public class DifficultSolution {
      *      注意你不能在第 1 天和第 2 天接连购买股票，之后再将它们卖出。  
      *      因为这样属于同时参与了多笔交易，你必须在再次购买前出售掉之前的股票。
      * 示例 3:
-     * <p>
+     *
      * 输入: [7,6,4,3,1]
      * 输出: 0
      * 解释: 在这个情况下, 没有交易完成, 所以最大利润为 0。
@@ -39,6 +39,15 @@ public class DifficultSolution {
      * @return
      */
     public static int maxProfit(int[] prices) {
-        return 0;
+        int profit = 0;
+        int[] stock = new int[2];
+        for (int i = 0; i < prices.length; i++) {
+            for (int j = i + 1; j < prices.length; j++) {
+                if (prices[j] > prices[i]) {
+
+                }
+            }
+        }
+        return profit;
     }
 }

@@ -25,10 +25,26 @@ public class MediumSolution {
      * @return
      */
     public static ListNode swapPairs(ListNode head) {
-        while (head.next != null) {
-
+        ListNode iterator = head;
+        int i = 1;
+        // 前节点，如果只有节点，则为自身
+        ListNode preNode = iterator;
+        while (iterator.next != null) {
+            // 下一个节点
+            ListNode nextNode = iterator.next;
+            // 当前节点
+            ListNode nowNode = iterator;
+            if (i % 2 == 0) {
+                nowNode.next = preNode;
+                preNode.next = nextNode;
+            }
+            if (i % 2 != 0 && nowNode.next != null && nowNode.next.next != null && i > 1) {
+                nowNode.next = nowNode.next.next;
+            }
+            preNode = iterator;
+            iterator = iterator.next;
+            i++;
         }
-        head.next = head;
         return head;
     }
 
@@ -182,5 +198,59 @@ public class MediumSolution {
      */
     public static int maxArea(int[] height) {
         return 0;
+    }
+
+    /**
+     * 给你一个由 '1'（陆地）和 '0'（水）组成的的二维网格，请你计算网格中岛屿的数量。
+     * <p>
+     * 岛屿总是被水包围，并且每座岛屿只能由水平方向或竖直方向上相邻的陆地连接形成。
+     * <p>
+     * 此外，你可以假设该网格的四条边均被水包围。
+     * <p>
+     * <p>
+     * 输入:
+     * [
+     * ['1','1','0','0','0'],
+     * ['1','1','0','0','0'],
+     * ['0','0','1','0','0'],
+     * ['0','0','0','1','1']
+     * ]
+     * 输出: 3
+     * 解释: 每座岛屿只能由水平和/或竖直方向上相邻的陆地连接而成。
+     * <p>
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/number-of-islands
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
+     * @param grid
+     * @return
+     */
+    public static int numIslands(char[][] grid) {
+        int count = 0;
+        int[][] searched = new int[grid.length][100];
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                // 未搜索过且为陆地
+                if (grid[i][j] == '1' && searched[i][j] == 0) {
+                    findIsland(grid, searched, i, j);
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    public static void findIsland(char[][] grid, int[][] searched, int i, int j) {
+        // 超出边界值或者已搜索过或不为陆地直接返回
+        if (i < 0 || j < 0 || i >= grid.length || j >= grid[0].length || searched[i][j] == 1 || grid[i][j] == '0') {
+            return;
+        }
+        if (grid[i][j] == '1') {
+            searched[i][j] = 1;
+            findIsland(grid, searched, i, j - 1);
+            findIsland(grid, searched, i - 1, j);
+            findIsland(grid, searched, i, j + 1);
+            findIsland(grid, searched, i + 1, j);
+        }
     }
 }

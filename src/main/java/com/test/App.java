@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.test.entity.User;
 
 import java.text.ParseException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author trangle
@@ -14,17 +14,52 @@ public class App {
 
     public static void main(String[] args) throws JsonProcessingException, IllegalAccessException, NoSuchFieldException, ParseException {
 
-        User user = new User(1L,"111");
-        User user2 = new User(2L,"222");
-        User user3 = new User(3L,"333");
-        User user4 = new User(4L,"444");
+        List<Integer> list1 = new ArrayList<Integer>() {{
+            add(2);
+            add(4);
+        }};
+        List<Integer> list2 = new ArrayList<Integer>() {{
+            add(1);
+            add(2);
+            add(3);
+            add(4);
+            add(5);
+        }};
+//        Iterator<Integer> iterator = list2.iterator();
+//        for (Integer integer1 : list1) {
+//            while (iterator.hasNext()) {
+//                Integer integer2 = iterator.next();
+//                if (integer1.equals(integer2)) {
+//                    iterator.remove();
+//                }
+//            }
+//        }
+        list2 = list2.stream()
+                .filter(o -> !list1.contains(o)).collect(Collectors.toList());
+        System.out.println(list2);
 
-        User tmpUser = user;
-        user = user2;
-        System.out.println(tmpUser);
-        System.out.println(user);
-
-//        System.out.println(get(new int[]{1,2}));
+        List<Integer> list3 = new ArrayList<Integer>() {{
+            add(2);
+            add(4);
+        }};
+        List<Integer> list4 = new ArrayList<Integer>() {{
+            add(1);
+            add(2);
+            add(3);
+            add(4);
+            add(5);
+        }};
+        Iterator<Integer> iterator1 = list4.iterator();
+        while (iterator1.hasNext()) {
+            Integer integer4 = iterator1.next();
+            for (Integer integer3 : list3) {
+                if (integer3.equals(integer4)) {
+                    iterator1.remove();
+                    break;
+                }
+            }
+        }
+        System.out.println(list4);
     }
 
     public static int get(int[] nums) {

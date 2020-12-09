@@ -27,9 +27,9 @@ public class ReentrantLockApp {
         final NumberWrapper num = new NumberWrapper();
         //初始化A线程
         Thread threadA = new Thread(() -> {
-            //需要先获得锁
-            lock.lock();
             try {
+                //需要先获得锁
+                lock.lock();
                 System.out.println("threadA start write");
                 //A线程先输出前3个数
                 while (num.value <= 3) {

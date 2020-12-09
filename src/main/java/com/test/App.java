@@ -60,6 +60,10 @@ public class App {
             }
         }
         System.out.println(list4);
+
+        String str = "0000-0005-0001-";
+        String str1 = "0000-0005-0001-";
+        System.out.println(str1.startsWith(str));
     }
 
     public static int get(int[] nums) {

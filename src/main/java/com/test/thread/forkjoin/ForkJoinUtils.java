@@ -6,7 +6,7 @@ package com.test.thread.forkjoin;
 public class ForkJoinUtils {
 
     public static Long add(Long value,Long another) throws InterruptedException {
-        Thread.sleep(1);
+//        Thread.sleep(1);
         return value + another;
     }
 }

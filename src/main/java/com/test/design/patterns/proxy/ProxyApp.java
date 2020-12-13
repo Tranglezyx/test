@@ -14,5 +14,6 @@ public class ProxyApp {
 
         Doing staticLogProxy = new StaticLogProxy(say);
         staticLogProxy.doing("吃饭");
+
     }
 }

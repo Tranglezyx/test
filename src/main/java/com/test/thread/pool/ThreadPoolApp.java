@@ -28,6 +28,7 @@ public class ThreadPoolApp {
         Future future = fixedThreadPool.submit(new AddTask());
         System.out.println(future.get());
         fixedThreadPool.shutdown();
+
     }
 }
 

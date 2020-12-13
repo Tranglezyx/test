@@ -8,7 +8,7 @@ public class ForkJoinConstants {
     /**
      * 每次处理数量
      */
-    public static final int BATCH_NUMBER = 100;
+    public static final int BATCH_NUMBER = 1000000;
 
     /**
      * 线程池数量

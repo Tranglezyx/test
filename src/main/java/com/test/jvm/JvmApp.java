@@ -7,6 +7,8 @@ import java.util.List;
 
 /**
  * @author trangle
+ *
+ * -Xms8m -Xmx40m -XX:+PrintGCDetails -XX:+HeapDumpOnOutOfMemoryError
  */
 public class JvmApp {
 

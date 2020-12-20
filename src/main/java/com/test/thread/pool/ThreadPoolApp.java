@@ -27,7 +27,7 @@ public class ThreadPoolApp {
         callableList.add(new AddTask());
         Future future = fixedThreadPool.submit(new AddTask());
         System.out.println(future.get());
-        fixedThreadPool.shutdown();
+//        fixedThreadPool.shutdown();
 
     }
 }

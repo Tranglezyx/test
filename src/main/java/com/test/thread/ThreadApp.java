@@ -9,21 +9,7 @@ public class ThreadApp {
 
     public static boolean flag = true;
 
-    public static void main(String[] args) {
-//        Thread thread = new TestThread();
-//        Thread thread2 = new TestThread();
-//        Thread thread3 = new TestThread();
-//        Thread thread4 = new TestThread();
-//        Thread thread5 = new TestThread();
-//        Thread thread6 = new TestThread();
-//
-//        thread.start();
-//        thread2.start();
-//        thread3.start();
-//        thread4.start();
-//        thread5.start();
-//        thread6.start();
-
+    public static void main(String[] args) throws InterruptedException {
 //        Thread thread = new Thread(new VolatileRunnable());
 //
 //        Thread thread1 = new Thread(() -> {
@@ -51,7 +37,16 @@ public class ThreadApp {
             System.out.println("listener thread : " + num);
         });
 
-        thread1.start();
-        thread2.start();
+//        thread1.start();
+//        thread2.start();
+
+        test();
+    }
+
+    public static void test() throws InterruptedException {
+        Object o = new Object();
+        synchronized (ThreadApp.class){
+            o.wait();
+        }
     }
 }

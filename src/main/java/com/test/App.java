@@ -1,5 +1,7 @@
 package com.test;
 
+import com.test.entity.User;
+
 import java.text.ParseException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -16,6 +18,9 @@ public class App {
         hashTable.put("null",null);
         System.out.println(hashMap.get(null));
         System.out.println(hashTable.get("null"));
+
+        List<User> list = new ArrayList<>();
+        list.stream().map(o -> o.getBool()).collect(Collectors.toList());
     }
 
     public static int get(int[] nums) {

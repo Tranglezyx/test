@@ -6,6 +6,7 @@ import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
+import java.util.stream.LongStream;
 
 /**
  * @author trangle
@@ -14,9 +15,9 @@ public class ForkJoinApp {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         ForkJoinPool forkJoinPool = new ForkJoinPool(ForkJoinConstants.POOL_NUMBER);
-        List<Long> longList = new ArrayList<>();
+        List<Long> longList = new ArrayList<>(100000000);
         Random random = new Random();
-        for (int i = 0; i < ForkJoinConstants.BATCH_NUMBER * ForkJoinConstants.BATCH_NUMBER; i++) {
+        for (long i = 0; i < 10000000; i++) {
             longList.add((long)random.nextInt(10000));
         }
 
@@ -34,5 +35,6 @@ public class ForkJoinApp {
 
         System.out.println("one thread result : " + result + "  time : " + (pointTime - startTime));
         System.out.println("fork join result : " + result1 + "  time : " + (endTime - pointTime));
+
     }
 }

@@ -27,8 +27,8 @@ public class AddTask extends RecursiveTask<Long> {
             long startTime = System.currentTimeMillis();
             AddTask aTask = new AddTask(numList.subList(0, numList.size() / 2));
             AddTask bTask = new AddTask(numList.subList(numList.size() / 2, numList.size()));
-            System.out.println(System.currentTimeMillis() - startTime);
             invokeAll(aTask, bTask);
+            System.out.println(Thread.currentThread().getName() + " >> 花费的时间(ms) >> " + (System.currentTimeMillis() - startTime));
             return aTask.join() + bTask.join();
         }
     }

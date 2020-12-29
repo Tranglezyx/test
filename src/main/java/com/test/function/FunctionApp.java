@@ -1,5 +1,7 @@
 package com.test.function;
 
+import java.util.concurrent.atomic.AtomicStampedReference;
+
 /**
  * @author trangle
  */

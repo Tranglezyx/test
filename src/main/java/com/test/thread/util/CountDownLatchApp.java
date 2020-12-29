@@ -1,4 +1,4 @@
-package com.test.thread;
+package com.test.thread.util;
 
 import com.test.thread.ReentrantLock.ReentrantLockApp;
 

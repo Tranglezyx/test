@@ -1,4 +1,4 @@
-package com.test.thread;
+package com.test.thread.util;
 
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;

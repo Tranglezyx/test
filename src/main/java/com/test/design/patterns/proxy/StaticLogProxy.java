@@ -13,4 +13,9 @@ public class StaticLogProxy implements Doing {
         System.out.println("静态日志代理---");
         doing.doing(s);
     }
+
+    @Override
+    public void saying(String s) {
+
+    }
 }

@@ -14,7 +14,7 @@ public class LogInvocationHandler implements InvocationHandler {
 
     @Override
     public Object invoke(Object obj, Method method, Object[] args) throws Throwable {
-        System.out.println("日志代理---");
+        System.out.println(method.getName() + "日志代理---");
         // 反射执行
         return method.invoke(proxy, args);
     }

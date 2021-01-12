@@ -12,12 +12,12 @@ import java.util.stream.Collectors;
 public class App {
 
     public static void main(String[] args) throws IllegalAccessException, NoSuchFieldException, ParseException, InterruptedException {
-        Map<String,Object> hashMap = new HashMap<>();
-        Map<String,Object> hashTable = new Hashtable<>();
-        hashMap.put(null,null);
-        hashTable.put("null",null);
+        Map<String, Object> hashMap = new HashMap<>();
+//        Map<String,Object> hashTable = new Hashtable<>();
+        hashMap.put(null, null);
+//        hashTable.put("null",null);
         System.out.println(hashMap.get(null));
-        System.out.println(hashTable.get("null"));
+//        System.out.println(hashTable.get("null"));
 
         List<User> list = new ArrayList<>();
         list.stream().map(o -> o.getBool()).collect(Collectors.toList());

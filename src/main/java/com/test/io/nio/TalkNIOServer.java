@@ -22,21 +22,23 @@ public class TalkNIOServer {
     private Selector selector;
     //用来记录在线人数，以及昵称,使用端口确定用户名
     private static Map<String, String> userMap = new HashMap<>();
+    private ServerSocketChannel socketChannel;
 
     public static void main(String[] args) throws IOException {
         new TalkNIOServer(PORT).listener();
     }
 
     public TalkNIOServer(int port) throws IOException {
-        ServerSocketChannel socketChannel = ServerSocketChannel.open();
+        socketChannel = ServerSocketChannel.open();
 
         socketChannel.bind(new InetSocketAddress(port));
         socketChannel.configureBlocking(false);
 
         selector = Selector.open();
-
+        // 将通道注册到多路复用器上，设定接收的事件
         socketChannel.register(selector, SelectionKey.OP_ACCEPT);
         System.out.println(" --- 服务已启动 --- ");
+        System.out.println(" 服务端通道地址为： " + socketChannel);
     }
 
     public void listener() throws IOException {
@@ -45,6 +47,7 @@ public class TalkNIOServer {
             if (selectFlag == 0) {
                 continue;
             }
+            // 获得关注事件的集合
             Set<SelectionKey> keySet = selector.selectedKeys();
             Iterator<SelectionKey> iterator = keySet.iterator();
             while (iterator.hasNext()) {
@@ -59,8 +62,13 @@ public class TalkNIOServer {
     public void processKey(SelectionKey key) throws IOException {
         // 初次连接
         if (key.isAcceptable()) {
-            ServerSocketChannel server = (ServerSocketChannel) key.channel();
-            SocketChannel client = server.accept();
+            // 根据处理请求获取服务端的通道
+//            ServerSocketChannel server = (ServerSocketChannel) key.channel();
+//            System.out.println("客户端第一次连接请求时，服务端通道地址为：" + server);
+            System.out.println("客户端第一次连接请求时，服务端通道地址为：" + socketChannel);
+            // 根据服务端通道生成客户端请求服务端数据生成的通道
+            SocketChannel client = socketChannel.accept();
+            System.out.println("客户端第一次连接请求时，客户端通道地址为：" + client);
             //非阻塞模式
             client.configureBlocking(false);
             //注册选择器，并设置为读取模式，收到一个连接请求，然后起一个SocketChannel，并注册到selector上，之后这个连接的数据，就由这个SocketChannel处理
@@ -73,8 +81,8 @@ public class TalkNIOServer {
         }
         //处理来自客户端的数据读取请求，后续数据交互
         if (key.isReadable()) {
+
             SocketChannel client = (SocketChannel) key.channel();
-            //
             String portStr = String.valueOf(client.socket().getPort());
             ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
             StringBuilder sb = new StringBuilder();

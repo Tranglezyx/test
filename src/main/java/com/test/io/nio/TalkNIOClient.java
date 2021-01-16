@@ -1,8 +1,10 @@
 package com.test.io.nio;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
@@ -16,22 +18,37 @@ import java.util.Set;
  */
 public class TalkNIOClient {
 
-    private final InetSocketAddress serverAddress = new InetSocketAddress("localhost",9090);
+    private final InetSocketAddress serverAddress = new InetSocketAddress("localhost", 9090);
     private Selector selector = null;
     private SocketChannel client = null;
 
     private String nickName = "";
     private Charset charset = Charset.forName("UTF-8");
     private static String USER_EXIST = "系统提示：该昵称已经存在，请换一个昵称";
-    private static String SPLIT = "#@#";
+    private static String SPLIT = "@";
 
     public static void main(String[] args) throws IOException {
-        new TalkNIOClient().session();;
+        new TalkNIOClient().session();
+//        start();
+    }
+
+    public static void start() throws IOException {
+        SocketChannel socketChannel = SocketChannel.open();
+        socketChannel.configureBlocking(false);
+        if (!socketChannel.connect(new InetSocketAddress("localhost", 9090))) {
+            System.out.println("尚未连接 --- ");
+            while (!socketChannel.finishConnect()) {
+                System.out.println("未完成连接 >>>> ");
+            }
+        }
+//        socketChannel.write(Charset.forName("UTF-8").encode(" 你们好 "));
+        socketChannel.write(ByteBuffer.wrap(" 你们好".getBytes()));
+//        socketChannel.close();
+        System.in.read();
     }
 
 
     public TalkNIOClient() throws IOException {
-
         //不管三七二十一，先把路修好，把关卡开放
         //连接远程主机的IP和端口
         client = SocketChannel.open(serverAddress);
@@ -80,11 +97,12 @@ public class TalkNIOClient {
     private class Reader extends Thread {
         public void run() {
             try {
-
                 //轮询
                 while (true) {
                     int readyChannels = selector.select();
-                    if (readyChannels == 0) continue;
+                    if (readyChannels == 0) {
+                        continue;
+                    }
                     Set<SelectionKey> selectedKeys = selector.selectedKeys();  //可以通过这个方法，知道可用通道的集合
                     Iterator<SelectionKey> keyIterator = selectedKeys.iterator();
                     while (keyIterator.hasNext()) {

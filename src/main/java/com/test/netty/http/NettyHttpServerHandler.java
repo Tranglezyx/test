@@ -7,6 +7,8 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.*;
 import io.netty.util.CharsetUtil;
 
+import java.nio.charset.Charset;
+
 /**
  * @author trangle
  */
@@ -25,7 +27,6 @@ public class NettyHttpServerHandler extends SimpleChannelInboundHandler<HttpObje
             System.out.println("客户端地址 》》" + channelHandlerContext.channel().remoteAddress());
             // 回复信息给浏览器
             ByteBuf content = Unpooled.copiedBuffer("这里是服务器 --- ", CharsetUtil.UTF_8);
-
             // 构建一个http返回结果
             DefaultFullHttpResponse fullHttpResponse = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK);
             // 构造返回头

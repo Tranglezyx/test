@@ -1,4 +1,4 @@
-package com.test.netty.simple;
+package com.test.netty.protocol;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
@@ -9,9 +9,9 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 /**
  * @author trangle
  */
-public class NettySimpleServer {
+public class NettyProtocolTcpServer {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         // EventLoopGroup默认的线程数量是核心数量 * 2
         // 默认使用轮训方式接收处理
         // 只处理accept连接请求
@@ -37,7 +37,8 @@ public class NettySimpleServer {
                         // 给PipeLine设置处理器
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
-                            socketChannel.pipeline().addLast(new NettySimpleServerHandler());
+                            socketChannel.pipeline().addLast(new MessageDecoder());
+                            socketChannel.pipeline().addLast(new NettyProtocolTcpServerHandler());
                         }
                     });
             System.out.println(" --- 服务器准备OK --- ");
@@ -57,6 +58,8 @@ public class NettySimpleServer {
             });
             // 对关闭通道进行监听
             channelFuture.channel().closeFuture().sync();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         } finally {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();

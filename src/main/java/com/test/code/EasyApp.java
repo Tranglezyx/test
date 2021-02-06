@@ -1,11 +1,11 @@
 package com.test.code;
 
-import com.test.code.entity.TreeNode;
+import com.test.code.entity.ListNode;
 import com.test.code.solution.EasySolution;
-import com.test.code.util.TreeUtils;
+import com.test.code.util.LinkedListUtils;
 
 import java.io.IOException;
-import java.util.UUID;
+import java.util.LinkedList;
 
 /**
  * @author trangle
@@ -13,11 +13,8 @@ import java.util.UUID;
 public class EasyApp {
 
     public static void main(String[] args) throws IOException {
-        TreeNode root = TreeUtils.generateTree(3,9,20,null,null,15,7);
-        System.out.println(TreeUtils.getTreeMaxDepth(root));
-        System.out.println(TreeUtils.getTreeMinDepth(root));
-        TreeUtils.show(root);
-        System.out.println(TreeUtils.isBalanced(root));
-        System.out.println(UUID.randomUUID().toString());
+        int[] nums = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
+        System.out.println(new EasySolution().maxSubArray2(nums));
     }
+
 }

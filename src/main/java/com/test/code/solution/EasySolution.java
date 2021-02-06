@@ -1,6 +1,7 @@
 package com.test.code.solution;
 
 import com.test.code.entity.ListNode;
+import com.test.code.entity.UnionFindCollect;
 
 import java.util.List;
 import java.util.Objects;
@@ -11,14 +12,152 @@ import java.util.Objects;
 public class EasySolution {
 
     /**
+     * 给定一个整数数组，找出总和最大的连续数列，并返回总和。
+     * <p>
+     * 示例：
+     * <p>
+     * 输入： [-2,1,-3,4,-1,2,1,-5,4]
+     * 输出： 6
+     * 解释： 连续子数组 [4,-1,2,1] 的和最大，为 6。
+     * <p>
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/contiguous-sequence-lcci
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
+     * @param nums
+     * @return
+     */
+    public int maxSubArray2(int[] nums) {
+        if (nums == null) {
+            return 0;
+        }
+        int max = nums[0];
+        int subSum = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            subSum = Math.max(subSum + nums[i], nums[i]);
+            max = Math.max(subSum, max);
+        }
+        return max;
+    }
+
+    /**
+     * 反转单项链表
+     * https://leetcode-cn.com/problems/fan-zhuan-lian-biao-lcof/
+     *
+     * @param head
+     */
+    public ListNode reverseList(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode reverseNodeHeader = new ListNode(0);
+        while (head != null) {
+            // 暂存节点
+            ListNode reverseNode = head;
+            head = head.next;
+            // 进行反转
+            ListNode tmpNode = reverseNodeHeader.next;
+            reverseNodeHeader.next = reverseNode;
+            reverseNode.next = tmpNode;
+        }
+        return reverseNodeHeader.next;
+    }
+
+
+    /**
+     * 剑指 Offer 53 - II. 0～n-1中缺失的数字
+     * 一个长度为n-1的递增排序数组中的所有数字都是唯一的，并且每个数字都在范围0～n-1之内。
+     * 在范围0～n-1内的n个数字中有且只有一个数字不在该数组中，请找出这个数字。
+     * <p>
+     * 示例 1:
+     * <p>
+     * 输入: [0,1,3]
+     * 输出: 2
+     * 示例 2:
+     * <p>
+     * 输入: [0,1,2,3,4,5,6,7,9]
+     * 输出: 8
+     * <p>
+     * https://leetcode-cn.com/problems/que-shi-de-shu-zi-lcof/
+     *
+     * @param nums
+     * @return 返回不存在的数字
+     * <p>
+     * 思路：
+     * 因为是递增的，且数字长度在 0 ~ n-1中，
+     * 所以可以通过判断当前数字值与其下标的大小
+     * 如果当前值大于其下标，则说明缺少的值小于当前值
+     * 如果当前值等于其下标，则说明缺少的值大于当前值
+     */
+    public int missingNumber(int[] nums) {
+        int start = 0;
+        int end = nums.length;
+        int missNum = 0;
+        // 如果长度为非偶数，则中间值自动向下取整
+        int middle = (end + start) / 2;
+        while (end - start != 1) {
+            if (nums[middle] == middle) {
+                // 等于则说明缺少值大于当前值
+                start = middle;
+            } else {
+                // 剩下只剩一种当前值大于其下标的情况，则说明缺少值小于当前值
+                end = middle;
+            }
+            middle = (end + start) / 2;
+        }
+        if (nums[middle] == middle) {
+            missNum = nums[middle] + 1;
+        } else {
+            missNum = nums[middle] - 1;
+        }
+        return missNum;
+    }
+
+    /**
+     * 674. 最长连续递增序列
+     * <p>
+     * 给定一个未经排序的整数数组，找到最长且 连续递增的子序列，并返回该序列的长度。
+     * <p>
+     * 连续递增的子序列 可以由两个下标 l 和 r（l < r）确定，如果对于每个 l <= i < r，都有 nums[i] < nums[i + 1] ，那么子序列 [nums[l], nums[l + 1], ..., nums[r - 1], nums[r]] 就是连续递增子序列。
+     * <p>
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/longest-continuous-increasing-subsequence
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
+     * @param nums
+     * @return 最长递增子序列长度
+     * <p>
+     */
+    public int findLengthOfLCIS(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        // 最大值
+        int max = 1;
+        // 当前值
+        int count = 1;
+        for (int i = 0; i < nums.length - 1; i++) {
+            if (nums[i + 1] > nums[i]) {
+                count++;
+            } else {
+                count = 1;
+            }
+            if (count > max) {
+                max = count;
+            }
+        }
+        return max;
+    }
+
+    /**
      * 打印全部
-     *             *
-     *         * * *
-     *     * * * * *
+     * *
+     * * * *
+     * * * * * *
      * * * * * * * *
-     *     * * * * *
-     *         * * *
-     *             *
+     * * * * * *
+     * * * *
+     * *
      *
      * @param n
      */

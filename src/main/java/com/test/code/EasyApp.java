@@ -13,8 +13,8 @@ import java.util.LinkedList;
 public class EasyApp {
 
     public static void main(String[] args) throws IOException {
-        int[] nums = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
-        System.out.println(new EasySolution().maxSubArray2(nums));
+        int[] nums = {0,1,1,0,1,1,1,0};
+        System.out.println(new EasySolution().findMaxConsecutiveOnes(nums));
     }
 
 }

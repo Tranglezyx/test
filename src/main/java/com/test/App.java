@@ -1,10 +1,11 @@
 package com.test;
 
-import com.test.entity.User;
-
 import java.text.ParseException;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author trangle
@@ -12,24 +13,19 @@ import java.util.stream.Collectors;
 public class App {
 
     public static void main(String[] args) throws IllegalAccessException, NoSuchFieldException, ParseException, InterruptedException {
-        Map<String, Object> hashMap = new HashMap<>();
-//        Map<String,Object> hashTable = new Hashtable<>();
-        hashMap.put(null, null);
-//        hashTable.put("null",null);
-        System.out.println(hashMap.get(null));
-//        System.out.println(hashTable.get("null"));
+        String patternStr = "#\\{(.+?)\\}";
+        Pattern pattern = Pattern.compile(patternStr);
+        String str = "afkasusernamealkdjfk今天#{userName}#{email}";
+        Map<String, Object> map = new HashMap<>();
+        map.put("userName", "zhangsan");
+        map.put("email", "lisi");
 
-        List<User> list = new ArrayList<>();
-        list.stream().map(o -> o.getBool()).collect(Collectors.toList());
-    }
-
-    public static int get(int[] nums) {
-        for (int num : nums) {
-            if (num == 1) {
-                return num + 2;
-            }
+        Matcher matcher = pattern.matcher(str);
+        while (matcher.find()) {
+            String group = matcher.group();
+            str = str.replace(group, map.get(group.substring("#{".length(), group.length() - 1)).toString());
         }
-        return 0;
+        System.out.println(str);
     }
 }
 

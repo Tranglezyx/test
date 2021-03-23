@@ -12,6 +12,117 @@ import java.util.Objects;
 public class EasySolution {
 
     /**
+     * https://leetcode-cn.com/problems/final-prices-with-a-special-discount-in-a-shop/
+     *
+     * @param prices
+     * @return
+     */
+    public int[] finalPrices(int[] prices) {
+        if (prices.length == 1) {
+            return prices;
+        }
+        int[] left = new int[prices.length];
+        int minPrices = 0;
+        int minIndex = 0;
+        boolean isMin = false;
+        for (int i = 0; i < prices.length; i++) {
+            if (minIndex > i && minPrices <= prices[i] && isMin) {
+                left[i] = prices[i] - minPrices;
+            } else {
+                boolean minPricesChange = false;
+                for (int j = i + 1; j < prices.length; j++) {
+                    if (prices[j] <= prices[i]) {
+                        if (prices[i] >= prices[i + 1]) {
+                            isMin = true;
+                        } else {
+                            isMin = false;
+                        }
+                        left[i] = prices[i] - prices[j];
+                        minPrices = prices[j];
+                        minIndex = j;
+                        minPricesChange = true;
+                        break;
+                    }
+                }
+                if (!minPricesChange) {
+                    left[i] = prices[i];
+                }
+            }
+        }
+        return left;
+    }
+
+    /**
+     * 编写一个函数来查找字符串数组中的最长公共前缀。
+     * <p>
+     * 如果不存在公共前缀，返回空字符串 ""。
+     * <p>
+     *  
+     * <p>
+     * 示例 1：
+     * <p>
+     * 输入：strs = ["flower","flow","flight"]
+     * 输出："fl"
+     * 示例 2：
+     * <p>
+     * 输入：strs = ["dog","racecar","car"]
+     * 输出：""
+     * 解释：输入不存在公共前缀。
+     * <p>
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/longest-common-prefix
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
+     * @param strs
+     * @return
+     */
+    public String longestCommonPrefix(String[] strs) {
+        if (strs == null || strs.length == 0) {
+            return "";
+        }
+        String str = strs[0];
+        for (int i = 1; i < strs.length; i++) {
+            int j = 0;
+            for (; j < str.length() && j < strs[i].length(); j++) {
+                if (str.charAt(j) != strs[i].charAt(j)) {
+                    break;
+                }
+            }
+            str = str.substring(0, j);
+            if ("".equals(str)) {
+                return str;
+            }
+        }
+        return str;
+    }
+
+    public String longestCommonPrefix2(String[] strs) {
+        if (strs == null || strs.length == 0) {
+            return "";
+        }
+        String minStr = strs[0];
+        for (int i = 1; i < strs.length; i++) {
+            minStr = getLongestPrefix(minStr, strs[i]);
+        }
+        return minStr;
+    }
+
+    public String getLongestPrefix(String minStr, String lastMinStr) {
+        char[] lastMinChars = lastMinStr.toCharArray();
+        char[] minChars = minStr.toCharArray();
+        StringBuilder sb = new StringBuilder("");
+        int minLength = Math.min(minChars.length, lastMinChars.length);
+        for (int i = 0; i < minLength; i++) {
+            if (minChars[i] == lastMinChars[i]) {
+                sb.append(minChars[i]);
+            } else {
+                break;
+            }
+        }
+        return sb.toString();
+    }
+
+    /**
      * 给定两个字符串 s 和 t，它们只包含小写字母。
      * <p>
      * 字符串 t 由字符串 s 随机重排，然后在随机位置添加一个字母。

@@ -1,4 +1,4 @@
-package com.test;
+package com.test.code.hw;
 
 /**
  * @author trangle

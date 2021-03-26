@@ -11,8 +11,8 @@ import java.io.IOException;
 public class EasyApp {
 
     public static void main(String[] args) throws IOException {
-        int[] prices = new int[]{8,7,4,2,8,1,7,7,10,1};
-        SoutUtils.printIntArray(new EasySolution().finalPrices(prices));
+        int[] prices = new int[]{0,0,0,0,0,1,0,0};
+        System.out.println(new EasySolution().canPlaceFlowers(prices, 0));
     }
 
 }

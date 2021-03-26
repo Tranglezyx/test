@@ -12,6 +12,44 @@ import java.util.Objects;
 public class EasySolution {
 
     /**
+     * https://leetcode-cn.com/problems/can-place-flowers/
+     *
+     * @param flowerbed
+     * @param n
+     * @return
+     */
+    public boolean canPlaceFlowers(int[] flowerbed, int n) {
+        int count = 0;
+        if(n == 0){
+            return true;
+        }
+        if (flowerbed.length == 1 && flowerbed[0] == 0 && n == 1) {
+            return true;
+        }
+        if (n > (flowerbed.length / 2) + 1) {
+            return false;
+        }
+        for (int i = 0; i < flowerbed.length - 1; i++) {
+            if (flowerbed[i] == 0 && ((i == 0 || flowerbed[i - 1] == 0) && flowerbed[i + 1] == 0)) {
+                count++;
+                flowerbed[i] = 1;
+                i++;
+            }
+            if (count >= n) {
+                return true;
+            }
+        }
+        if (flowerbed.length >= 2 && flowerbed[flowerbed.length - 1] == 0 && flowerbed[flowerbed.length - 2] == 0) {
+            count++;
+        }
+        if (count >= n) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * https://leetcode-cn.com/problems/final-prices-with-a-special-discount-in-a-shop/
      *
      * @param prices

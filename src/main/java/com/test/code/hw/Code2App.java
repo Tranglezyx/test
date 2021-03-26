@@ -1,4 +1,4 @@
-package com.test;
+package com.test.code.hw;
 
 /**
  * @author trangle
@@ -7,7 +7,7 @@ public class Code2App {
 
     // 0 : 48   9 : 57
     public static void main(String[] args) {
-        System.out.println(function("2132"));
+        System.out.println("01234".substring(0,2));
     }
 
     public static int function(String str) {

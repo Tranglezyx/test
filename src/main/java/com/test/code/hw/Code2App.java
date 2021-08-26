@@ -2,6 +2,8 @@ package com.test.code.hw;
 
 /**
  * @author trangle
+ *
+ * 查找字符串中最长连续数字子串
  */
 public class Code2App {
 

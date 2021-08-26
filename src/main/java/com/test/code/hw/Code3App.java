@@ -32,13 +32,13 @@ public class Code3App {
                 {1, 1, 0, 1, 0},
                 {1, 1, 0, 0, 1},
                 {1, 1, 0, 1, 0},
-                {0, 0, 0, 0, 1}
+                {0, 0, 1, 0, 1}
         };
 
         int count = 0;
         for (int i = 0; i < lands.length; i++) {
-            int[] a = lands[i];
-            for (int j = 0; j < a.length; j++) {
+            int[] tmpArray = lands[i];
+            for (int j = 0; j < tmpArray.length; j++) {
                 if (lands[i][j] == 1) {
                     count++;
                     find(lands, i, j);

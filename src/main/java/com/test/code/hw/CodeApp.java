@@ -2,6 +2,8 @@ package com.test.code.hw;
 
 /**
  * @author trangle
+ *
+ * 查询数组中连续和最大的子序列
  */
 public class CodeApp {
 

@@ -24,7 +24,7 @@ public class ProxyApp {
 
         // 获得jdk动态代理生成的新类
         byte[] bytes = ProxyGenerator.generateProxyClass("$ProxySay", new Class[]{Doing.class});
-        FileOutputStream os = new FileOutputStream("/Users/trangle/Downloads/$ProxySay.class");
+        FileOutputStream os = new FileOutputStream("/Users/trangle/Documents/workspace/test/src/main/java/com/test/design/patterns/proxy/$ProxySay.class");
         os.write(bytes);
         os.close();
 

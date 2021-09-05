@@ -26,16 +26,6 @@ public class App {
             str = str.replace(group, map.get(group.substring("#{".length(), group.length() - 1)).toString());
         }
         System.out.println(str);
-    }
-}
 
-class FinalizeTest {
-
-    public static FinalizeTest finalizeTest = null;
-
-    @Override
-    protected void finalize() throws Throwable {
-        System.out.println(">>>> finalize >>>>");
-        finalizeTest = this;
     }
 }

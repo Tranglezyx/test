@@ -12,6 +12,45 @@ import java.util.Objects;
 public class EasySolution {
 
     /**
+     * 给定一个包含大写字母和小写字母的字符串 s ，返回 通过这些字母构造成的 最长的回文串 。
+     * <p>
+     * 在构造过程中，请注意 区分大小写 。比如 "Aa" 不能当做一个回文字符串。
+     * <p>
+     *  
+     * <p>
+     * 示例 1:
+     * <p>
+     * 输入:s = "abccccdd"
+     * 输出:7
+     * 解释:
+     * 我们可以构造的最长的回文串是"dccaccd", 它的长度是 7。
+     * <p>
+     * 链接：https://leetcode-cn.com/problems/longest-palindrome
+     *
+     * @param s
+     * @return
+     */
+    public int longestPalindrome(String s) {
+        // a-97 z-122 A-65 Z-90
+        int[] flag = new int[58];
+        int count = 0;
+        for (char c : s.toCharArray()) {
+            int index = c - 65;
+            flag[index]++;
+            int mo = flag[index] % 2;
+            if (mo != 0) {
+                count++;
+            } else {
+                count--;
+            }
+        }
+        if (count > 1) {
+            return s.length() - count + 1;
+        }
+        return s.length();
+    }
+
+    /**
      * https://leetcode-cn.com/problems/can-place-flowers/
      *
      * @param flowerbed
@@ -20,7 +59,7 @@ public class EasySolution {
      */
     public boolean canPlaceFlowers(int[] flowerbed, int n) {
         int count = 0;
-        if(n == 0){
+        if (n == 0) {
             return true;
         }
         if (flowerbed.length == 1 && flowerbed[0] == 0 && n == 1) {

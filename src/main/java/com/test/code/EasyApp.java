@@ -11,8 +11,9 @@ import java.io.IOException;
 public class EasyApp {
 
     public static void main(String[] args) throws IOException {
-        int[] prices = new int[]{0,0,0,0,0,1,0,0};
-        System.out.println(new EasySolution().canPlaceFlowers(prices, 0));
+        String s = "aabcaa";
+        System.out.println(new EasySolution().longestPalindrome(s));
     }
+
 
 }

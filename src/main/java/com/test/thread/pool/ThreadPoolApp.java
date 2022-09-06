@@ -59,31 +59,33 @@ public class ThreadPoolApp {
         System.out.println("当前CPU核心数 >> " + Runtime.getRuntime().availableProcessors());
         threadPoolExecutor.shutdown();
     }
-}
 
-class NumEntity {
-    public static final AtomicInteger num = new AtomicInteger(1);
+    public static class NumEntity {
+        public static final AtomicInteger num = new AtomicInteger(1);
 
-    public static void add() {
-        num.incrementAndGet();
-    }
-}
-
-class AddTask implements Callable {
-
-    /**
-     * Computes a result, or throws an exception if unable to do so.
-     *
-     * @return computed result
-     * @throws Exception if unable to compute a result
-     */
-    @Override
-    public List<Integer> call() throws Exception {
-        List<Integer> numList = new ArrayList<>();
-        Random random = new Random();
-        for (int i = 0; i < 1000; i++) {
-            numList.add(random.nextInt(10000));
+        public static void add() {
+            num.incrementAndGet();
         }
-        return numList;
+    }
+
+    public static class AddTask implements Callable {
+
+        /**
+         * Computes a result, or throws an exception if unable to do so.
+         *
+         * @return computed result
+         * @throws Exception if unable to compute a result
+         */
+        @Override
+        public List<Integer> call() throws Exception {
+            List<Integer> numList = new ArrayList<>();
+            Random random = new Random();
+            for (int i = 0; i < 1000; i++) {
+                numList.add(random.nextInt(10000));
+            }
+            return numList;
+        }
     }
 }
+
+

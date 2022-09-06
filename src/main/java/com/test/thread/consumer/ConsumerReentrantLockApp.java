@@ -44,62 +44,63 @@ public class ConsumerReentrantLockApp {
         }, "C").start();
     }
 
+    public static class Number {
+
+        private Lock lock = new ReentrantLock();
+        private Condition condition3 = lock.newCondition();
+        private Condition condition5 = lock.newCondition();
+        private Condition condition7 = lock.newCondition();
+
+        private int number = 3;
+
+        public void mod3() throws InterruptedException {
+            try {
+                lock.lock();
+                while (number % 3 != 0) {
+                    condition3.await();
+                }
+                System.out.println(Thread.currentThread().getName() + " --- " + number);
+                number += 2;
+                condition5.signal();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                lock.unlock();
+            }
+        }
+
+        public void mod5() throws InterruptedException {
+            try {
+                lock.lock();
+                while (number % 5 != 0) {
+                    condition5.await();
+                }
+                System.out.println(Thread.currentThread().getName() + " --- " + number);
+                number += 2;
+                condition7.signal();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                lock.unlock();
+            }
+        }
+
+        public void mod7() throws InterruptedException {
+            try {
+                lock.lock();
+                while (number % 7 != 0) {
+                    condition7.await();
+                }
+                System.out.println(Thread.currentThread().getName() + " --- " + number);
+                number = 3;
+                condition3.signal();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                lock.unlock();
+            }
+        }
+    }
 }
 
-class Number {
 
-    private Lock lock = new ReentrantLock();
-    private Condition condition3 = lock.newCondition();
-    private Condition condition5 = lock.newCondition();
-    private Condition condition7 = lock.newCondition();
-
-    private int number = 3;
-
-    public void mod3() throws InterruptedException {
-        try {
-            lock.lock();
-            while (number % 3 != 0) {
-                condition3.await();
-            }
-            System.out.println(Thread.currentThread().getName() + " --- " + number);
-            number += 2;
-            condition5.signal();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            lock.unlock();
-        }
-    }
-
-    public void mod5() throws InterruptedException {
-        try {
-            lock.lock();
-            while (number % 5 != 0) {
-                condition5.await();
-            }
-            System.out.println(Thread.currentThread().getName() + " --- " + number);
-            number += 2;
-            condition7.signal();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            lock.unlock();
-        }
-    }
-
-    public void mod7() throws InterruptedException {
-        try {
-            lock.lock();
-            while (number % 7 != 0) {
-                condition7.await();
-            }
-            System.out.println(Thread.currentThread().getName() + " --- " + number);
-            number = 3;
-            condition3.signal();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            lock.unlock();
-        }
-    }
-}

@@ -18,22 +18,24 @@ public class CallableApp {
         new Thread(future).start();
         System.out.println(future.get());
     }
-}
 
-class NewIntegerTask implements Callable<Integer> {
+    public static class NewIntegerTask implements Callable<Integer> {
 
-    private static final Random random = new Random();
+        private static final Random random = new Random();
 
-    /**
-     * Computes a result, or throws an exception if unable to do so.
-     *
-     * @return computed result
-     * @throws Exception if unable to compute a result
-     */
-    @Override
-    public Integer call() throws Exception {
-        System.out.println("call --- ");
-        TimeUnit.SECONDS.sleep(3);
-        return random.nextInt(1000);
+        /**
+         * Computes a result, or throws an exception if unable to do so.
+         *
+         * @return computed result
+         * @throws Exception if unable to compute a result
+         */
+        @Override
+        public Integer call() throws Exception {
+            System.out.println("call --- ");
+            TimeUnit.SECONDS.sleep(3);
+            return random.nextInt(1000);
+        }
     }
 }
+
+

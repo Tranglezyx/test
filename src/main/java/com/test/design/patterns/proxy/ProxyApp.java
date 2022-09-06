@@ -1,13 +1,9 @@
 package com.test.design.patterns.proxy;
 
-import sun.misc.ProxyGenerator;
-
-import javax.tools.JavaCompiler;
-import javax.tools.ToolProvider;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+//import sun.misc.ProxyGenerator;
+//
+//import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Proxy;
 
 /**
  * @author trangle
@@ -23,10 +19,10 @@ public class ProxyApp {
         dynamicProxy.saying("王八蛋");
 
         // 获得jdk动态代理生成的新类
-        byte[] bytes = ProxyGenerator.generateProxyClass("$ProxySay", new Class[]{Doing.class});
-        FileOutputStream os = new FileOutputStream("/Users/trangle/Documents/workspace/test/src/main/java/com/test/design/patterns/proxy/$ProxySay.class");
-        os.write(bytes);
-        os.close();
+//        byte[] bytes = ProxyGenerator.generateProxyClass("$ProxySay", new Class[]{Doing.class});
+//        FileOutputStream os = new FileOutputStream("/Users/trangle/Documents/workspace/test/src/main/java/com/test/design/patterns/proxy/$ProxySay.class");
+//        os.write(bytes);
+//        os.close();
 
 //        Doing dynamicProxy1 = (Doing) Proxy.newProxyInstance(say.getClass().getClassLoader(), say.getClass().getInterfaces(), logInvocationHandler);
 //        dynamicProxy1.doing("睡觉");

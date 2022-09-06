@@ -1,9 +1,7 @@
 package com.test.code.util;
 
-import com.sun.corba.se.impl.ior.ObjectAdapterIdNumber;
 import com.test.code.entity.TreeNode;
 
-import java.sql.SQLOutput;
 import java.util.*;
 
 /**

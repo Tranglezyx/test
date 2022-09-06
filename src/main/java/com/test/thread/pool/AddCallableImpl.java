@@ -1,7 +1,6 @@
 package com.test.thread.pool;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Callable;
@@ -25,19 +24,20 @@ public class AddCallableImpl implements Callable<BigDecimal> {
      */
     @Override
     public BigDecimal call() throws Exception {
-        BigDecimal result = new BigDecimal(2);
+        BigDecimal result = new BigDecimal(1);
         Random random = new Random();
         for (BigDecimal value : valueList) {
             int index = random.nextInt(4);
-            if (index == 0) {
-                result = result.add(value);
-            } else if (index == 1) {
-                result = result.subtract(value);
-            } else if (index == 2) {
-                result = result.multiply(value);
-            } else {
-                result = result.divide(value, 2, RoundingMode.HALF_UP);
-            }
+//            if (index == 0) {
+//                result = result.add(value);
+//            } else if (index == 1) {
+//                result = result.subtract(value);
+//            } else if (index == 2) {
+//                result = result.multiply(value);
+//            } else {
+//                result = result.divide(value, 2, RoundingMode.HALF_UP);
+//            }
+            result = result.multiply(value);
         }
         return result;
     }

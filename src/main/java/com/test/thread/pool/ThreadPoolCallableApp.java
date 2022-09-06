@@ -1,7 +1,6 @@
 package com.test.thread.pool;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -11,7 +10,7 @@ public class ThreadPoolCallableApp {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
 
-        int num = 3000 * 10000;
+        int num = 50 * 10000;
         List<BigDecimal> values = new ArrayList<>();
         Random random = new Random();
         long start = System.currentTimeMillis();
@@ -19,49 +18,69 @@ public class ThreadPoolCallableApp {
             values.add(BigDecimal.valueOf(random.nextInt(100)).add(BigDecimal.ONE));
         }
         System.out.println("数据制造完成,耗时:" + (System.currentTimeMillis() - start) + "ms");
-        calculate(values);
-        calculate1(values);
+//        BigDecimal calculate = calculate(values);
+        BigDecimal calculate1 = calculate1(values);
+//        System.out.println(calculate.compareTo(calculate1));
     }
 
-    private static void calculate1(List<BigDecimal> values) throws InterruptedException, ExecutionException {
+    private static BigDecimal calculate1(List<BigDecimal> values) throws InterruptedException, ExecutionException {
         long start = System.currentTimeMillis();
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
-                2,
+                5,
                 5,
                 3L,
                 TimeUnit.SECONDS,
-                new ArrayBlockingQueue(3),
+                new ArrayBlockingQueue(1),
                 Executors.defaultThreadFactory(),
                 new ThreadPoolExecutor.CallerRunsPolicy()
         );
-        AddCallableImpl addCallable = new AddCallableImpl(values.subList(0, 1000 * 10000));
-        AddCallableImpl addCallable1 = new AddCallableImpl(values.subList(1000 * 10000, 2000 * 10000));
-        AddCallableImpl addCallable2 = new AddCallableImpl(values.subList(2000 * 10000, 3000 * 10000));
-        Future<BigDecimal> submit = threadPoolExecutor.submit(addCallable);
-        Future<BigDecimal> submit1 = threadPoolExecutor.submit(addCallable1);
-        Future<BigDecimal> submit2 = threadPoolExecutor.submit(addCallable2);
-        while (!submit.isDone() && !submit1.isDone() && !submit2.isDone()) {
-
+        int batch = 5;
+        int batchSize = values.size() / batch;
+        List<Future<BigDecimal>> threadList = new ArrayList<>();
+        for (int i = 0; i < batch; i++) {
+            List<BigDecimal> subList;
+            if (i != batch - 1) {
+                subList = values.subList(batchSize * i, batchSize * (i + 1));
+            } else {
+                subList = values.subList(batchSize * i, values.size());
+            }
+            threadList.add(threadPoolExecutor.submit(new AddCallableImpl(subList)));
         }
-        System.out.println(submit.get().add(submit1.get()).add(submit2.get()) + "  耗时:" + (System.currentTimeMillis() - start) + "ms");
+        int count = 0;
+        while (count != threadList.size()) {
+            count = 0;
+            for (Future<BigDecimal> future : threadList) {
+                if (future.isDone()) {
+                    count++;
+                }
+            }
+        }
+        BigDecimal result = new BigDecimal(2);
+        for (Future<BigDecimal> future : threadList) {
+            result = result.multiply(future.get());
+        }
+        System.out.println("  耗时:" + (System.currentTimeMillis() - start) + "ms");
+        return result;
     }
 
-    private static void calculate(List<BigDecimal> values) {
+    private static BigDecimal calculate(List<BigDecimal> values) {
         long start = System.currentTimeMillis();
         BigDecimal result = new BigDecimal(2);
         Random random = new Random();
         for (BigDecimal value : values) {
             int index = random.nextInt(4);
-            if (index == 0) {
-                result = result.add(value);
-            } else if (index == 1) {
-                result = result.subtract(value);
-            } else if (index == 2) {
-                result = result.multiply(value);
-            } else {
-                result = result.divide(value, 2, RoundingMode.HALF_UP);
-            }
+//            if (index == 0) {
+//                result = result.add(value);
+//            } else if (index == 1) {
+//                result = result.subtract(value);
+//            } else if (index == 2) {
+//                result = result.multiply(value);
+//            } else {
+//                result = result.divide(value, 2, RoundingMode.HALF_UP);
+//            }
+            result = result.multiply(value);
         }
-        System.out.println(result + "  耗时：" + (System.currentTimeMillis() - start) + "ms");
+        System.out.println("  耗时：" + (System.currentTimeMillis() - start) + "ms");
+        return result;
     }
 }

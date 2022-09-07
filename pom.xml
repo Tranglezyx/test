@@ -14,20 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>nexus-huice</id>
-            <name>Maven Repository</name>
-            <url>https://nexus.huice.com/repository/maven-public</url>
-        </repository>
-    </repositories>
-
     <dependencies>
-        <dependency>
-            <groupId>cn.wangdian</groupId>
-            <artifactId>amazon-sp-api</artifactId>
-            <version>2.0.0</version>
-        </dependency>
         <!-- https://mvnrepository.com/artifact/org.drools/drools-core -->
         <dependency>
             <groupId>org.drools</groupId>

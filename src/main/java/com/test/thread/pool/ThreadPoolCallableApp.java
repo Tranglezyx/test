@@ -18,9 +18,9 @@ public class ThreadPoolCallableApp {
             values.add(BigDecimal.valueOf(random.nextInt(100)).add(BigDecimal.ONE));
         }
         System.out.println("数据制造完成,耗时:" + (System.currentTimeMillis() - start) + "ms");
-//        BigDecimal calculate = calculate(values);
+        BigDecimal calculate = calculate(values);
         BigDecimal calculate1 = calculate1(values);
-//        System.out.println(calculate.compareTo(calculate1));
+        System.out.println(calculate.compareTo(calculate1));
     }
 
     private static BigDecimal calculate1(List<BigDecimal> values) throws InterruptedException, ExecutionException {

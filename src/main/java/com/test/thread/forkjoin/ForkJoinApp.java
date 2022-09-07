@@ -17,7 +17,7 @@ public class ForkJoinApp {
         ForkJoinPool forkJoinPool = new ForkJoinPool(ForkJoinConstants.POOL_NUMBER);
         List<Long> longList = new ArrayList<>(100000000);
         Random random = new Random();
-        for (long i = 0; i < 10000000; i++) {
+        for (long i = 0; i < 100000000; i++) {
             longList.add((long)random.nextInt(10000));
         }
 

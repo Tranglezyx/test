@@ -23,27 +23,29 @@ public class CountDownLatchApp {
         countDownLatch.await();
         System.out.println("--- end ---");
     }
-}
 
-class NewCountDownLatch {
-    private static volatile int count;
-    private static ReentrantLock lock = new ReentrantLock();
+    public static class NewCountDownLatch {
+        private static volatile int count;
+        private static ReentrantLock lock = new ReentrantLock();
 
-    public NewCountDownLatch(int count) {
-        this.count = count;
-    }
+        public NewCountDownLatch(int count) {
+            this.count = count;
+        }
 
-    public void countDown() {
-        lock.lock();
-        try {
-            count--;
-        } finally {
-            lock.unlock();
+        public void countDown() {
+            lock.lock();
+            try {
+                count--;
+            } finally {
+                lock.unlock();
+            }
+        }
+
+        public void await() {
+            while (count != 0) {
+            }
         }
     }
 
-    public void await() {
-        while (count != 0) {
-        }
-    }
 }
+

@@ -29,52 +29,52 @@ public class ReadWriteLockApp {
             }, String.valueOf(i)).start();
         }
     }
-}
 
-class ConcurrentCache {
-    private static volatile Map<String, Object> map = new HashMap<>();
-    private static final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+    public static class ConcurrentCache {
+        private static volatile Map<String, Object> map = new HashMap<>();
+        private static final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
 
-    public void set(String key, Object value) {
-        readWriteLock.writeLock().lock();
-        try {
+        public void set(String key, Object value) {
+            readWriteLock.writeLock().lock();
+            try {
+                System.out.println(Thread.currentThread().getName() + " - 保存数据");
+                map.put(key, value);
+                TimeUnit.MILLISECONDS.sleep(500);
+                System.out.println(Thread.currentThread().getName() + " - 数据保存完毕");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                readWriteLock.writeLock().unlock();
+            }
+        }
+
+        public void get(String key) {
+            readWriteLock.readLock().lock();
+            try {
+                System.out.println(Thread.currentThread().getName() + " - 读取数据");
+                TimeUnit.SECONDS.sleep(3);
+                System.out.println(Thread.currentThread().getName() + " - 数据读取完毕" + map.get(key));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                readWriteLock.readLock().unlock();
+            }
+        }
+    }
+
+
+    public static class Cache {
+        private static final Map<String, Object> map = new HashMap<>();
+
+        public void set(String key, Object value) {
             System.out.println(Thread.currentThread().getName() + " - 保存数据");
             map.put(key, value);
-            TimeUnit.MILLISECONDS.sleep(500);
             System.out.println(Thread.currentThread().getName() + " - 数据保存完毕");
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } finally {
-            readWriteLock.writeLock().unlock();
         }
-    }
 
-    public void get(String key) {
-        readWriteLock.readLock().lock();
-        try {
+        public void get(String key) {
             System.out.println(Thread.currentThread().getName() + " - 读取数据");
-            TimeUnit.SECONDS.sleep(3);
             System.out.println(Thread.currentThread().getName() + " - 数据读取完毕" + map.get(key));
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } finally {
-            readWriteLock.readLock().unlock();
         }
-    }
-}
-
-
-class Cache {
-    private static final Map<String, Object> map = new HashMap<>();
-
-    public void set(String key, Object value) {
-        System.out.println(Thread.currentThread().getName() + " - 保存数据");
-        map.put(key, value);
-        System.out.println(Thread.currentThread().getName() + " - 数据保存完毕");
-    }
-
-    public void get(String key) {
-        System.out.println(Thread.currentThread().getName() + " - 读取数据");
-        System.out.println(Thread.currentThread().getName() + " - 数据读取完毕" + map.get(key));
     }
 }

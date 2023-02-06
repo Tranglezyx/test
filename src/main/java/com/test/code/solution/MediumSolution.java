@@ -2,10 +2,48 @@ package com.test.code.solution;
 
 import com.test.code.entity.ListNode;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class MediumSolution {
+
+    /**
+     * 数字 n 代表生成括号的对数，请你设计一个函数，用于能够生成所有可能的并且 有效的 括号组合。
+     * <p>
+     * 示例 1：
+     * <p>
+     * 输入：n = 3
+     * 输出：["((()))","(()())","(())()","()(())","()()()"]
+     * 示例 2：
+     * <p>
+     * 输入：n = 1
+     * 输出：["()"]
+     *
+     * @param n
+     * @return
+     */
+    public static List<String> generateParenthesis(int n) {
+        List<String> list = new ArrayList<>();
+        if (n <= 0) {
+            return list;
+        }
+        dfsGenerate(list, "", 0, 0, n);
+        return list;
+    }
+
+    public static void dfsGenerate(List<String> list, String str, int left, int right, int n) {
+        if (left > n || left < right) {
+            return;
+        }
+        if (str.length() == n * 2) {
+            list.add(str);
+            return;
+        }
+        dfsGenerate(list, str + "(", left + 1, right, n);
+        dfsGenerate(list, str + ")", left, right + 1, n);
+    }
 
     /**
      * 给定一个链表，两两交换其中相邻的节点，并返回交换后的链表。

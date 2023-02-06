@@ -1,7 +1,6 @@
 package com.test.code.solution;
 
 import com.test.code.entity.ListNode;
-import com.test.code.entity.UnionFindCollect;
 
 import java.util.List;
 import java.util.Objects;
@@ -10,6 +9,47 @@ import java.util.Objects;
  * @author trangle
  */
 public class EasySolution {
+
+    /**
+     * 假设你正在爬楼梯。需要 n 阶你才能到达楼顶。
+     * <p>
+     * 每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？
+     * <p>
+     * 示例 1：
+     * <p>
+     * 输入：n = 2
+     * 输出：2
+     * 解释：有两种方法可以爬到楼顶。
+     * 1. 1 阶 + 1 阶
+     * 2. 2 阶
+     * <p>
+     * https://leetcode.cn/problems/climbing-stairs/
+     *
+     * @param n
+     * @return
+     */
+    public int climbStairs(int n) {
+        /*
+        假设f(x)代表x阶梯时的方法数量，则f(x-1)为x-1阶梯时的方法数量，f(x-2)则为x-2阶梯时的方法数量，
+        此时f(x) = f(x-1) + f(x-2)
+        因为(x-1)再迈一级阶梯就到达x阶梯，(x-2)迈二级阶梯到达x阶梯，所以到达x阶梯的方法应该是到达x-1阶梯和x-2阶梯的方法之和
+         */
+        int count = 0;
+        int one = 2;
+        int two = 1;
+        if (n == 1) {
+            return 1;
+        }
+        if (n == 2) {
+            return 2;
+        }
+        for (int i = 3; i <= n; i++) {
+            count = one + two;
+            two = one;
+            one = count;
+        }
+        return count;
+    }
 
     /**
      * 给定一个包含大写字母和小写字母的字符串 s ，返回 通过这些字母构造成的 最长的回文串 。

@@ -4,6 +4,7 @@ package com.test.design.patterns.proxy;
 //
 //import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Proxy;
 
 /**
  * @author trangle
@@ -14,9 +15,10 @@ public class ProxyApp {
         Say say = new Say();
 
         LogInvocationHandler logInvocationHandler = new LogInvocationHandler(say);
-        Doing dynamicProxy = (Doing) logInvocationHandler.getProxy();
-        dynamicProxy.doing("吃饭");
-        dynamicProxy.saying("王八蛋");
+//        Doing dynamicProxy = (Doing) logInvocationHandler.getProxy();
+        Object dynamicProxy = Proxy.newProxyInstance(say.getClass().getClassLoader(), say.getClass().getInterfaces(), logInvocationHandler);
+        ((Doing) dynamicProxy).doing("吃饭");
+        ((Doing) dynamicProxy).saying("王八蛋");
 
         // 获得jdk动态代理生成的新类
 //        byte[] bytes = ProxyGenerator.generateProxyClass("$ProxySay", new Class[]{Doing.class});

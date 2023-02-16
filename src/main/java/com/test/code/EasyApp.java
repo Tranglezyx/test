@@ -10,7 +10,7 @@ import java.io.IOException;
 public class EasyApp {
 
     public static void main(String[] args) throws IOException {
-        System.out.println(new EasySolution().climbStairs(7));
+        System.out.println(new EasySolution().isValid("{()}"));
     }
 
 

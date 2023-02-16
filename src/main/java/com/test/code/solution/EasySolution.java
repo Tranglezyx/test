@@ -11,6 +11,76 @@ import java.util.Objects;
 public class EasySolution {
 
     /**
+     * 给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串 s ，判断字符串是否有效。
+     * <p>
+     * 有效字符串需满足：
+     * <p>
+     * 左括号必须用相同类型的右括号闭合。
+     * 左括号必须以正确的顺序闭合。
+     * 每个右括号都有一个对应的相同类型的左括号。
+     * <p>
+     * <p>
+     * 示例 1：
+     * <p>
+     * 输入：s = "()"
+     * 输出：true
+     * 示例 2：
+     * <p>
+     * 输入：s = "()[]{}"
+     * 输出：true
+     * 示例 3：
+     * <p>
+     * 输入：s = "(]"
+     * 输出：false
+     *
+     * @param s
+     * @return
+     */
+    public boolean isValid(String s) {
+        if (s.length() % 2 != 0) {
+            return false;
+        }
+        char[] chars = s.toCharArray();
+        char[] left = new char[chars.length];
+        int index = 0;
+        for (int i = 0; i < chars.length; i++) {
+            char c = chars[i];
+            if (c == '(' || c == '[' || c == '{') {
+                left[index] = c;
+                index++;
+                continue;
+            }
+            if (c == ')') {
+                if (index != 0 && left[index - 1] == '(') {
+                    index--;
+                } else {
+                    return false;
+                }
+                continue;
+            }
+            if (c == '}') {
+                if (index != 0 && left[index - 1] == '{') {
+                    index--;
+                } else {
+                    return false;
+                }
+                continue;
+            }
+            if (c == ']') {
+                if (index != 0 && left[index - 1] == '[') {
+                    index--;
+                } else {
+                    return false;
+                }
+            }
+        }
+        if (index != 0) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * 假设你正在爬楼梯。需要 n 阶你才能到达楼顶。
      * <p>
      * 每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？

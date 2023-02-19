@@ -1,17 +1,27 @@
 package com.test.code.hw;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @author trangle
- *
+ * <p>
  * 查询数组中连续和最大的子序列
  */
 public class CodeApp {
 
     public static void main(String[] args) {
-//        int[] nums = new int[]{1,2,1,0,-1,3,4,0,1,-2,7,8};
-//        int[] nums = new int[]{-1,-2};
-        int[] nums = new int[]{1, 2, -5, 1, 1, 1};
-        function(nums);
+        List<String> list = new ArrayList<>();
+        list.add("rst");
+        list.add("mnrt");
+        list = list.stream().sorted().collect(Collectors.toList());
+        System.out.println(list);
+        for (int i = 97; i < 122; i++) {
+            System.out.printf((char)i + " ");
+        }
     }
 
     public static void function(int[] nums) {

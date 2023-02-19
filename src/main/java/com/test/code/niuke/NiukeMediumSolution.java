@@ -6,6 +6,48 @@ import java.util.HashSet;
 
 public class NiukeMediumSolution {
 
+    /**
+     * 计算成功举办活动需要多少名主持人
+     *
+     * @param n        int整型 有n个活动
+     * @param startEnd int整型二维数组 startEnd[i][0]用于表示第i个活动的开始时间，startEnd[i][1]表示第i个活动的结束时间
+     * @return int整型
+     * <p>
+     * {{1,4},{2,7},{5,6},{6,7}}
+     */
+    public int minmumNumberOfHost(int n, int[][] startEnd) {
+        if (n == 0 || n == 1) {
+            return n;
+        }
+        int[] start = new int[n];
+        int[] end = new int[n];
+        for (int i = 0; i < n; i++) {
+            start[i] = startEnd[i][0];
+            end[i] = startEnd[i][1];
+        }
+        Arrays.sort(start);
+        Arrays.sort(end);
+        int count = 0;
+        int endIndex = 0;
+        for (int i = 0; i < n; i++) {
+            if (start[i] < end[endIndex]) {
+                count++;
+            } else {
+                endIndex++;
+            }
+        }
+        return count;
+    }
+
+    /**
+     * 字符串排列组合
+     * <p>
+     * 输入一个长度为 n 字符串，打印出该字符串中字符的所有排列，你可以以任意顺序返回这个字符串数组。
+     * 例如输入字符串ABC,则输出由字符A,B,C所能排列出来的所有字符串ABC,ACB,BAC,BCA,CBA和CAB
+     *
+     * @param str
+     * @return
+     */
     public ArrayList<String> Permutation(String str) {
         HashSet<String> set = new HashSet<>();
         dfsPermutation(str, "", set);

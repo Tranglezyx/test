@@ -14,7 +14,7 @@ import java.util.stream.LongStream;
 public class ForkJoinApp {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
-        ForkJoinPool forkJoinPool = new ForkJoinPool(ForkJoinConstants.POOL_NUMBER);
+        ForkJoinPool forkJoinPool = new ForkJoinPool(10);
         List<Long> longList = new ArrayList<>(100000000);
         Random random = new Random();
         for (long i = 0; i < 100000000; i++) {

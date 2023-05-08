@@ -27,15 +27,6 @@ public class User extends AuditDomain{
 
     private static final long serialVersionUID = 1L;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
-
     public Class clazz(){
         return super.getClass();
     }

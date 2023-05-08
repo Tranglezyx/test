@@ -16,8 +16,13 @@ public class ArrayListTest {
     public static List<User> userList = new ArrayList<>();
 
     public static void main(String[] args) {
-        filterTest();
-        System.out.println();
+        initUserList();
+        List<User> collect = userList.stream().filter(item -> item.getMoney().compareTo(new BigDecimal(333)) <= 0).collect(Collectors.toList());
+        for (User user : collect) {
+            user.setMoney(user.getMoney().add(new BigDecimal(100)));
+        }
+        System.out.println(collect);
+        System.out.println(userList);
     }
 
     public static void sortedTest() {

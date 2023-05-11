@@ -3,6 +3,7 @@ package com.test.collection;
 import com.test.entity.User;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -16,13 +17,21 @@ public class ArrayListTest {
     public static List<User> userList = new ArrayList<>();
 
     public static void main(String[] args) {
-        initUserList();
-        List<User> collect = userList.stream().filter(item -> item.getMoney().compareTo(new BigDecimal(333)) <= 0).collect(Collectors.toList());
-        for (User user : collect) {
-            user.setMoney(user.getMoney().add(new BigDecimal(100)));
+//        initUserList();
+//        List<User> collect = userList.stream().filter(item -> item.getMoney().compareTo(new BigDecimal(333)) <= 0).collect(Collectors.toList());
+//        for (User user : collect) {
+//            user.setMoney(user.getMoney().add(new BigDecimal(100)));
+//        }
+//        System.out.println(collect);
+//        System.out.println(userList);
+
+        // 需要补充的汇率数据
+        LocalDate start = LocalDate.of(2023, 5, 1);
+        LocalDate end = LocalDate.now();
+        while (start.isBefore(end)) {
+            System.out.println(start);
+            start = start.plusDays(1);
         }
-        System.out.println(collect);
-        System.out.println(userList);
     }
 
     public static void sortedTest() {

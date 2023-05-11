@@ -10,6 +10,9 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.UUID;
 
+/**
+ * 令牌桶限流器
+ */
 @AllArgsConstructor
 public class DefaultLimiter implements Limiter {
 

@@ -17,7 +17,8 @@ public class LimitApp {
 
         RedissonClient client = Redisson.create(config);
 
-        Limiter defaultLimiter = new DefaultLimiter(LimiterConfigEnum.REPORT, client);
+//        Limiter defaultLimiter = new DefaultLimiter(LimiterConfigEnum.REPORT, client);
+        Limiter defaultLimiter = new RedissonRateLimiter(LimiterConfigEnum.REPORT, client);
         for (int i = 0; i < 100; i++) {
             boolean pass = defaultLimiter.pass();
             Thread.sleep(1000);

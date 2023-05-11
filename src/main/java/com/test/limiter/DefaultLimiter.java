@@ -1,7 +1,6 @@
 package com.test.limiter;
 
 import lombok.AllArgsConstructor;
-import org.apache.logging.log4j.core.util.UuidUtil;
 import org.redisson.api.RScoredSortedSet;
 import org.redisson.api.RedissonClient;
 
@@ -9,7 +8,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.Random;
 import java.util.UUID;
 
 @AllArgsConstructor

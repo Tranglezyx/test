@@ -1,7 +1,6 @@
 package com.test.jiami;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -10,7 +9,12 @@ import javax.crypto.spec.SecretKeySpec;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
+@Slf4j
 public class AESApp {
+
+    public static void main(String[] args) {
+
+    }
 
     private final static String AES = "AES";
 

@@ -59,6 +59,12 @@ public class User extends AuditDomain{
 
     }
 
+    public User(Long userId, String userName, BigDecimal money) {
+        this.userId = userId;
+        this.userName = userName;
+        this.money = money;
+    }
+
     public User(Long userId, String userName) {
         this.userId = userId;
         this.userName = userName;

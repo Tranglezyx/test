@@ -1,5 +1,6 @@
 package com.test.kafka;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.NewTopic;
@@ -9,6 +10,7 @@ import java.util.Collections;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
+@Slf4j
 public class KafkaTopicCreator {
 
     public static void main(String[] args) {

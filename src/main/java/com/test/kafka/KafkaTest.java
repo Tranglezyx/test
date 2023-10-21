@@ -1,20 +1,25 @@
 package com.test.kafka;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.RecordMetadata;
 
 import java.util.Arrays;
 import java.util.Properties;
+import java.util.UUID;
+import java.util.concurrent.Future;
 
+@Slf4j
 public class KafkaTest {
 
     public static void consumer() {
         Properties properties = new Properties();
-        properties.put("bootstrap.servers", "kafka.srm.lkk.com:9092");
+        properties.put("bootstrap.servers", "localhost:9092");
         properties.put("group.id", "group-1");
         properties.put("enable.auto.commit", "true");
         properties.put("auto.commit.interval.ms", "1000");
@@ -26,21 +31,21 @@ public class KafkaTest {
         KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<>(properties);
         kafkaConsumer.subscribe(Arrays.asList("test"));
         try {
-            while(true){
+            while (true) {
                 ConsumerRecords<String, String> records = kafkaConsumer.poll(100);
                 for (ConsumerRecord<String, String> record : records) {
                     System.out.printf("offset = %d, value = %s", record.offset(), record.value());
                     System.out.println();
                 }
             }
-        }catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public static void producer() {
         Properties properties = new Properties();
-        properties.put("bootstrap.servers", "kafka.srm.lkk.com:9092");
+        properties.put("bootstrap.servers", "localhost:9092");
         properties.put("acks", "all");
         properties.put("retries", 0);
         properties.put("batch.size", 16384);
@@ -50,15 +55,16 @@ public class KafkaTest {
         properties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         Producer<String, String> producer = null;
         try {
-            producer = new KafkaProducer<>(properties);
+            producer = new KafkaProducer<String, String>(properties);
             for (int i = 0; i < 3; i++) {
-                String msg = "卡夫卡乱码问题测试==================== " + i;
-                producer.send(new ProducerRecord<String, String>("test", msg));
-                System.out.println("Sent:" + msg);
+                String msg = "卡夫卡乱码问题测试==================== " + UUID.randomUUID().toString();
+                Future<RecordMetadata> send = producer.send(new ProducerRecord<String, String>("test", msg));
+                if (send.isDone()) {
+                    log.info("发送成功 --- {}", msg);
+                }
             }
         } catch (Exception e) {
-            e.printStackTrace();
-
+            log.error("error:", e);
         } finally {
             producer.close();
         }

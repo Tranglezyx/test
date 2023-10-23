@@ -9,14 +9,16 @@ import lombok.extern.slf4j.Slf4j;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 @Slf4j
 public class HutoolAESApp {
 
     public static void main(String[] args) {
         SecretKey key = SecureUtil.generateKey("AES", 128);
-//        String secretKey = new String(bytesToHexString(key.getEncoded()));
-        String secretKey = "F2D03D75AF64BFEC0F922C84D25CB26E";
+        String secretKey = Base64.getEncoder().encodeToString(key.getEncoded());
+//        String secretKey = "F2D03D75AF64BFEC0F922C84D25CB26E";
+//        String secretKey = "6530cee41cfac872";
         log.info("密钥：{}", secretKey);
         String text = "17602175650,13111111111";
         AES aes = new AES(Mode.ECB, Padding.ZeroPadding, new SecretKeySpec(secretKey.getBytes(), "AES"));

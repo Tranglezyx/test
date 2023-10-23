@@ -47,7 +47,7 @@ public class RSAApp {
         log.info("解密结果：{},{}", decryptStr,decryptStr.equals(randomKeyAes));
 
         String phoneSecret = "W7HWMp0VDQoUYi/c17+Asg==";
-        AES aes = new AES(Mode.ECB, Padding.ZeroPadding, new SecretKeySpec(randomKeyAes.getBytes(), "AES"));
+        AES aes = new AES(Mode.ECB, Padding.PKCS5Padding, new SecretKeySpec(randomKeyAes.getBytes(), "AES"));
 
         String decrypt = new String(aes.decrypt(phoneSecret), StandardCharsets.UTF_8);
         log.info("解密结果：{}", decrypt);

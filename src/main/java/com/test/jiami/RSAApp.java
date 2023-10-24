@@ -51,6 +51,10 @@ public class RSAApp {
 
         String decrypt = new String(aes.decrypt(phoneSecret), StandardCharsets.UTF_8);
         log.info("解密结果：{}", decrypt);
+
+        String newRandomKey = "18b5fc5b89595412";
+        String encryptBase64 = rsa.encryptBase64(newRandomKey, KeyType.PublicKey);
+        log.info("{}",encryptBase64);
     }
 
     public static void test() {

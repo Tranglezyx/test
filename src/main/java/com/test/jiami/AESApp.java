@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
@@ -12,22 +13,18 @@ import java.util.Base64;
 @Slf4j
 public class AESApp {
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws NoSuchAlgorithmException {
+        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+        SecretKey secretKey = keyGen.generateKey();
+        String value = Base64.getEncoder().encodeToString(secretKey.getEncoded());
+        log.info("{}",value);
     }
-
-    private final static String AES = "AES";
-
-    /**
-     * 密钥位数
-     */
-    private final static int SECRET_KEY_BIT = 128;
 
     private static Cipher CIPHER = null;
 
     static {
         try {
-            CIPHER = Cipher.getInstance(AES);
+            CIPHER = Cipher.getInstance("AES");
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (NoSuchPaddingException e) {
@@ -43,9 +40,9 @@ public class AESApp {
      * @throws NoSuchAlgorithmException
      */
     public static String generateAESKey() throws NoSuchAlgorithmException {
-        KeyGenerator keyGen = KeyGenerator.getInstance(AES);
+        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
         // 设置密钥长度为128位
-        keyGen.init(SECRET_KEY_BIT);
+        keyGen.init(128);
         return bytesToHexString(keyGen.generateKey().getEncoded());
     }
 
@@ -66,7 +63,7 @@ public class AESApp {
      * @throws Exception
      */
     public static String encrypt(String plainText, String secretKey) throws Exception {
-        SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes(), AES);
+        SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes(), "AES");
         CIPHER.init(Cipher.ENCRYPT_MODE, secretKeySpec);
         byte[] encryptedBytes = CIPHER.doFinal(plainText.getBytes());
         return Base64.getEncoder().encodeToString(encryptedBytes);
@@ -81,7 +78,7 @@ public class AESApp {
      * @throws Exception
      */
     public static String decrypt(String encryptedText, String secretKey) throws Exception {
-        SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes(), AES);
+        SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes(), "AES");
         CIPHER.init(Cipher.DECRYPT_MODE, secretKeySpec);
         byte[] encryptedBytes = Base64.getDecoder().decode(encryptedText);
         byte[] decryptedBytes = CIPHER.doFinal(encryptedBytes);

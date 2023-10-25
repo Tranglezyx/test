@@ -20,12 +20,12 @@ public class HutoolAESApp {
         log.info("{},{}",format,key.getEncoded().length);
 //        String secretKey = Base64.getEncoder().encodeToString(key.getEncoded());
 //        String secretKey = "F2D03D75AF64BFEC0F922C84D25CB26E";
-        String secretKey = "18b5fc5b89595412";
+        String secretKey = "6530cee41cfac872";
 //        String secretKey = "1234123412341234";
         log.info("密钥：{},bytes:{}", secretKey,secretKey.getBytes().length);
         String text = "17602175650";
         AES aes = new AES(Mode.ECB, Padding.PKCS5Padding, new SecretKeySpec(secretKey.getBytes(), "AES"));
-        String encrypt = aes.encryptBase64(text, StandardCharsets.UTF_8);
+        String encrypt = aes.encryptBase64(text);
         log.info("加密结果：{}", encrypt);
         String decrypt = new String(aes.decrypt(encrypt), StandardCharsets.UTF_8);
         log.info("解密结果：{}", decrypt);

@@ -21,7 +21,7 @@ public class RSAApp {
         decode();
     }
 
-    public static void decode(){
+    public static void decode() {
         String secretKey = "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBANnOPp+W3MhQXdXm\n" +
                 "nrbj/EpgUB4FYbbuNzL+5Fjf4bfpedPO/bdf34M88IIi1RRiM9RtV6mMNXCu3/lo\n" +
                 "AL31wp5cUgoVl97XpPe74OYwbqdqrZYoyu0yCjKlturjPvYxSW5fV732Vrxk2v03\n" +
@@ -40,11 +40,15 @@ public class RSAApp {
                 "BWG27jcy/uRY3+G36XnTzv23X9+DPPCCItUUYjPUbVepjDVwrt/5aAC99cKeXFIK\n" +
                 "FZfe16T3u+DmMG6naq2WKMrtMgoypbbq4z72MUluX1e99la8ZNr9Nwo0OgU9HTYo\n" +
                 "KRETdCCDoqlUzEik9wIDAQAB";
+        publicKey = publicKey.replaceAll("\n", "");
+        secretKey = secretKey.replaceAll("\n", "");
+        log.info("publicKey:{}", publicKey);
+        log.info("secretKey:{}", secretKey);
         String randomKeyAes = "6530cee41cfac872";
         String randomCode = "QegpuKn9EdeaolqHSFbqbbJQaZnNRuNhOB51Ka1HtTomOqk2Hdm8ULz8EyLiHRLWu+Vhz5Llt4W/WO7w0artd3BEFweFiSyHByQ3CWC44dm4SjZJdtzuReFAooWDN9mH7ByQZFJ72U6ySQHqlktIpWUwfvYLA19uzzeZshBQvC8=";
         RSA rsa = new RSA(AsymmetricAlgorithm.RSA_ECB_PKCS1.getValue(), secretKey, publicKey);
         String decryptStr = rsa.decryptStr(randomCode, KeyType.PrivateKey);
-        log.info("解密结果：{},{}", decryptStr,decryptStr.equals(randomKeyAes));
+        log.info("解密结果：{},{}", decryptStr, decryptStr.equals(randomKeyAes));
 
         String phoneSecret = "W7HWMp0VDQoUYi/c17+Asg==";
         AES aes = new AES(Mode.ECB, Padding.PKCS5Padding, new SecretKeySpec(randomKeyAes.getBytes(), "AES"));
@@ -54,7 +58,7 @@ public class RSAApp {
 
         String newRandomKey = "18b5fc5b89595412";
         String encryptBase64 = rsa.encryptBase64(newRandomKey, KeyType.PublicKey);
-        log.info("{}",encryptBase64);
+        log.info("{}", encryptBase64);
     }
 
     public static void test() {

@@ -7,12 +7,14 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.*;
 import io.netty.util.CharsetUtil;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 用于具体处理消息处理，怎么处理客户端消息，怎么回复都在此类中处理
  *
  * @author trangle
  */
+@Slf4j
 public class NettyHttpServerHandler extends SimpleChannelInboundHandler<HttpObject> {
 
     /**
@@ -25,12 +27,13 @@ public class NettyHttpServerHandler extends SimpleChannelInboundHandler<HttpObje
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, HttpObject httpObject) throws Exception {
         if (httpObject instanceof FullHttpRequest) {
-            System.out.println("客户端地址 》》" + channelHandlerContext.channel().remoteAddress());
+            log.info("客户端地址 》》 {}", channelHandlerContext.channel().remoteAddress());
 
             ByteBuf byteBuf = ((FullHttpRequest) httpObject).content();
             byte[] bytes = new byte[byteBuf.readableBytes()];
             byteBuf.readBytes(bytes);
             String jsonStr = new String(bytes, "UTF-8");
+            log.info("请求参数:{}", jsonStr);
             System.out.println("请求参数：" + jsonStr);
             // 回复信息给浏览器
             ByteBuf responseContent = Unpooled.copiedBuffer("已收到请求，你的请求内容是 --- " + jsonStr, CharsetUtil.UTF_8);

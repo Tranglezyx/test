@@ -3,17 +3,19 @@ package com.test.netty.protocol;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ReplayingDecoder;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
 /**
  * @author trangle
  */
+@Slf4j
 public class MessageDecoder extends ReplayingDecoder<Void> {
 
     @Override
     protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list) throws Exception {
-        System.out.println("-- 解码 --");
+        log.info("准备解码:{}", list);
         // 将二进制字节码转成具体数据对象
         int length = byteBuf.readInt();
         byte[] content = new byte[length];

@@ -5,10 +5,13 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author trangle
  */
+
+@Slf4j
 public class NettyProtocolTcpServer {
 
     public static void main(String[] args) {

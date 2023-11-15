@@ -16,6 +16,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.aliyun.openservices</groupId>
+            <artifactId>aliyun-log</artifactId>
+            <version>0.6.96</version>
+        </dependency>
+        <dependency>
             <groupId>org.redisson</groupId>
             <artifactId>redisson</artifactId>
             <version>3.13.1</version>

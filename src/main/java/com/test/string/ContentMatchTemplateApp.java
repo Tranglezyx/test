@@ -3,6 +3,8 @@ package com.test.string;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.UUID;
+
 @Slf4j
 public class ContentMatchTemplateApp {
 
@@ -12,7 +14,13 @@ public class ContentMatchTemplateApp {
 
         String template = "【旦米科技】你好请于点到五楼报道{2}";
         String content = "【旦米科技】你好请于点到五楼报道fgsdfgs";
-        log.info("{}", stringMatchingWithSort(content, template));
+//        log.info("{}", stringMatchingWithSort(content, template));
+        log.info("{}", UUID.randomUUID().toString());
+        log.info("{}", UUID.randomUUID().toString());
+        log.info("{}", UUID.randomUUID().toString());
+        log.info("{}", UUID.randomUUID().toString());
+        log.info("{}", UUID.randomUUID().toString());
+        log.info("{}", UUID.randomUUID().toString());
     }
 
     /**

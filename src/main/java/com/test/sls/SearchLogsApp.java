@@ -10,9 +10,12 @@ import com.aliyun.openservices.log.exception.LogException;
 import com.aliyun.openservices.log.response.GetHistogramsResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.time.DateUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.Date;
 
 @Slf4j
 public class SearchLogsApp {
@@ -30,26 +33,48 @@ public class SearchLogsApp {
     static String logstoreName = "danmi-prod";
 
 
-    public static void main(String[] args) throws LogException, IOException {
+    public static void main(String[] args) throws LogException, IOException, ParseException {
+        String startDate = "2023-10-12";
+        String endTime = "2023-10-12 23:59:59";
+        Date start = DateUtils.parseDate(startDate, "yyyy-MM-dd");
+        Date end = DateUtils.parseDate(endTime, "yyyy-MM-dd HH:mm:ss");
+        int fromTime = (int) (start.getTime() / 1000);
+        int toTime = (int) (end.getTime() / 1000);
+
+        String str = "";
+        String[] split = str.split("\n");
+        long count = 0;
+        for (String name : split) {
+            String query = StrUtil.format("sendKafka and {}", name);
+            long num = queryLogs(query, fromTime, toTime);
+            log.info("name:{},num:{}", name, num);
+            count += num;
+        }
+        log.info("总数量:{}", count);
+    }
+
+    private static void queryRefundSuccessInfo() throws IOException, LogException {
         String toString = FileUtils.readFileToString(new File("无标题.json"), "UTF-8");
         JSONObject jsonObject = JSON.parseObject(toString);
         JSONArray records = jsonObject.getJSONArray("RECORDS");
+        // fromTime和toTime表示查询日志的时间范围，Unix时间戳格式。
+        int fromTime = (int) (System.currentTimeMillis() / 1000 - 36000);
+        int toTime = (int) (System.currentTimeMillis() / 1000);
         for (Object record : records) {
             if (record instanceof JSONObject) {
                 String batchId = ((JSONObject) record).getString("batch_id");
                 String phone = ((JSONObject) record).getString("target_number");
-                queryLogs(batchId, phone);
+                // 查询语句。
+                String query = StrUtil.format("{} and {} and 退费成功", batchId, phone);
+                long num = queryLogs(query, fromTime, toTime);
+                if (num > 0) {
+                    log.info("退费成功,batchId:{},phone:{}", batchId, phone);
+                }
             }
         }
     }
 
-    public static void queryLogs(String batchId, String phone) throws LogException {
-        // 查询语句。
-        String query = StrUtil.format("{} and {} and 退费成功", batchId, phone);
-        // fromTime和toTime表示查询日志的时间范围，Unix时间戳格式。
-        int fromTime = (int) (System.currentTimeMillis() / 1000 - 36000);
-        int toTime = (int) (System.currentTimeMillis() / 1000);
-
+    public static long queryLogs(String query, int fromTime, int toTime) throws LogException {
         GetHistogramsResponse response = client.GetHistograms(projectName, logstoreName, fromTime, toTime, "", query);
         long count = 0;
         for (Histogram histogram : response.GetHistograms()) {
@@ -59,8 +84,6 @@ public class SearchLogsApp {
                 count += histogram.GetCount();
             }
         }
-        if (count > 0) {
-            log.info("退费成功 >>> {},{}", batchId, phone);
-        }
+        return count;
     }
 }

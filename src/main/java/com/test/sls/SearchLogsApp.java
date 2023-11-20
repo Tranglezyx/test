@@ -4,49 +4,42 @@ import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.aliyun.openservices.log.Client;
-import com.aliyun.openservices.log.common.Histogram;
 import com.aliyun.openservices.log.exception.LogException;
-import com.aliyun.openservices.log.response.GetHistogramsResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.time.DateUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.Date;
+import java.util.List;
 
 @Slf4j
 public class SearchLogsApp {
 
-    // 本示例从环境变量中获取AccessKey ID和AccessKey Secret。
-    static String accessId = "";
-    static String accessKey = "";
-    // 日志服务的服务接入点。此处以杭州为例，其它地域请根据实际情况填写。
-    static String host = "cn-guangzhou.log.aliyuncs.com";
-    // 创建日志服务Client。
-    static Client client = new Client(host, accessId, accessKey);
-    // Project名称。
-    static String projectName = "k8s-log-custom-allcloud";
-    // Logstore名称。
-    static String logstoreName = "danmi-prod";
-
-
     public static void main(String[] args) throws LogException, IOException, ParseException {
-        String startDate = "2023-10-12";
-        String endTime = "2023-10-12 23:59:59";
-        Date start = DateUtils.parseDate(startDate, "yyyy-MM-dd");
-        Date end = DateUtils.parseDate(endTime, "yyyy-MM-dd HH:mm:ss");
-        int fromTime = (int) (start.getTime() / 1000);
-        int toTime = (int) (end.getTime() / 1000);
+        File file = new File("2023-11-19日发送失败号码.txt");
+        String query = "因流程异常无法发送号码";
+        String startDate = "2023-11-19 20:00:00";
+        String endTime = "2023-11-19 22:00:00";
+        List<String> logList = SLSUtils.queryLogsContent(query, startDate, endTime);
+        log.info("获取日志，日志数量:{}", logList.size());
+        for (String log : logList) {
+            JSONObject jsonObject = JSON.parseObject(log);
+            String content = jsonObject.getString("content");
+            String phone = content.substring(content.indexOf("因流程异常无法发送号码")).replace("因流程异常无法发送号码:", "");
+            FileUtils.write(file, phone + "\n", "utf-8", true);
+        }
+    }
 
+    private static void queryCount() throws ParseException, LogException {
+        String startDate = "2023-10-12 00:00:00";
+        String endTime = "2023-10-12 23:59:59";
         String str = "";
         String[] split = str.split("\n");
         long count = 0;
         for (String name : split) {
             String query = StrUtil.format("sendKafka and {}", name);
-            long num = queryLogs(query, fromTime, toTime);
+            long num = SLSUtils.queryLogsCount(query, startDate, endTime);
             log.info("name:{},num:{}", name, num);
             count += num;
         }
@@ -66,7 +59,7 @@ public class SearchLogsApp {
                 String phone = ((JSONObject) record).getString("target_number");
                 // 查询语句。
                 String query = StrUtil.format("{} and {} and 退费成功", batchId, phone);
-                long num = queryLogs(query, fromTime, toTime);
+                long num = SLSUtils.queryLogsCount(query, fromTime, toTime);
                 if (num > 0) {
                     log.info("退费成功,batchId:{},phone:{}", batchId, phone);
                 }
@@ -74,16 +67,5 @@ public class SearchLogsApp {
         }
     }
 
-    public static long queryLogs(String query, int fromTime, int toTime) throws LogException {
-        GetHistogramsResponse response = client.GetHistograms(projectName, logstoreName, fromTime, toTime, "", query);
-        long count = 0;
-        for (Histogram histogram : response.GetHistograms()) {
-            // 由于区间较多，只输出有日志分布的区间。
-            if (0 < histogram.GetCount()) {
-                // 输出日志数量。
-                count += histogram.GetCount();
-            }
-        }
-        return count;
-    }
+
 }

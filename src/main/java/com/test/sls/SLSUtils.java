@@ -1,5 +1,6 @@
 package com.test.sls;
 
+import cn.hutool.core.util.StrUtil;
 import com.aliyun.openservices.log.Client;
 import com.aliyun.openservices.log.common.Histogram;
 import com.aliyun.openservices.log.common.LogItem;
@@ -73,5 +74,12 @@ public class SLSUtils {
             }
         }
         return count;
+    }
+
+    public static void main(String[] args) throws ParseException, LogException {
+        String startDate = "2023-11-19 00:00:00";
+        String endTime = "2023-11-20 23:59:59";
+        String query = StrUtil.format("{} and {}", "2023111907440183", "13921398087");
+        System.out.println(queryLogsCount(query,startDate,endTime));
     }
 }

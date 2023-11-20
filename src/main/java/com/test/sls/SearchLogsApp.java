@@ -17,6 +17,10 @@ import java.util.List;
 public class SearchLogsApp {
 
     public static void main(String[] args) throws LogException, IOException, ParseException {
+        queryRefundSuccessInfo();
+    }
+
+    private static void exportPhoneWithSendError() throws LogException, ParseException, IOException {
         File file = new File("2023-11-19日发送失败号码.txt");
         String query = "因流程异常无法发送号码";
         String startDate = "2023-11-19 20:00:00";
@@ -46,22 +50,28 @@ public class SearchLogsApp {
         log.info("总数量:{}", count);
     }
 
-    private static void queryRefundSuccessInfo() throws IOException, LogException {
+    private static void queryRefundSuccessInfo() throws IOException, LogException, ParseException {
         String toString = FileUtils.readFileToString(new File("无标题.json"), "UTF-8");
         JSONObject jsonObject = JSON.parseObject(toString);
         JSONArray records = jsonObject.getJSONArray("RECORDS");
         // fromTime和toTime表示查询日志的时间范围，Unix时间戳格式。
-        int fromTime = (int) (System.currentTimeMillis() / 1000 - 36000);
-        int toTime = (int) (System.currentTimeMillis() / 1000);
+        String startDate = "2023-11-19 00:00:00";
+        String endTime = "2023-11-20 23:59:59";
+        log.info("需要判断的号码数量为:{}", records.size());
+        int count = 0;
         for (Object record : records) {
             if (record instanceof JSONObject) {
                 String batchId = ((JSONObject) record).getString("batch_id");
                 String phone = ((JSONObject) record).getString("target_number");
                 // 查询语句。
                 String query = StrUtil.format("{} and {} and 退费成功", batchId, phone);
-                long num = SLSUtils.queryLogsCount(query, fromTime, toTime);
+                long num = SLSUtils.queryLogsCount(query, startDate, endTime);
                 if (num > 0) {
                     log.info("退费成功,batchId:{},phone:{}", batchId, phone);
+                }
+                count++;
+                if (count % 10000 == 0) {
+                    log.info("第 {} 条完成", count);
                 }
             }
         }

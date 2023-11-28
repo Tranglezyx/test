@@ -41,7 +41,9 @@ public class SLSUtils {
 
     public static List<String> queryLogsContent(String query, int fromTime, int toTime) throws LogException {
         long count = queryLogsCount(query, fromTime, toTime);
-        log.info("{}:日志总数量:{}", query, count);
+        if (count == 0) {
+            return null;
+        }
         long batchSize = 100;
         long batchNum = count / 100 + 1;
         List<String> resultList = new ArrayList<>();
@@ -74,12 +76,5 @@ public class SLSUtils {
             }
         }
         return count;
-    }
-
-    public static void main(String[] args) throws ParseException, LogException {
-        String startDate = "2023-11-19 00:00:00";
-        String endTime = "2023-11-20 23:59:59";
-        String query = StrUtil.format("{} and {}", "2023111907440183", "13921398087");
-        System.out.println(queryLogsCount(query,startDate,endTime));
     }
 }

@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.aliyun.openservices.log.exception.LogException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -51,23 +52,33 @@ public class SearchLogsApp {
     }
 
     private static void queryRefundSuccessInfo() throws IOException, LogException, ParseException {
-        String toString = FileUtils.readFileToString(new File("无标题.json"), "UTF-8");
+        String fileName = "1120.json";
+        String toString = FileUtils.readFileToString(new File(fileName), "UTF-8");
         JSONObject jsonObject = JSON.parseObject(toString);
         JSONArray records = jsonObject.getJSONArray("RECORDS");
         // fromTime和toTime表示查询日志的时间范围，Unix时间戳格式。
-        String startDate = "2023-11-19 00:00:00";
-        String endTime = "2023-11-20 23:59:59";
+        String startDate = "2023-11-21 00:00:00";
+        String endTime = "2023-11-27 23:59:59";
         log.info("需要判断的号码数量为:{}", records.size());
+        File refundSuccessFile = new File("退费成功" + fileName);
         int count = 0;
         for (Object record : records) {
             if (record instanceof JSONObject) {
                 String batchId = ((JSONObject) record).getString("batch_id");
                 String phone = ((JSONObject) record).getString("target_number");
                 // 查询语句。
-                String query = StrUtil.format("{} and {} and 退费成功", batchId, phone);
-                long num = SLSUtils.queryLogsCount(query, startDate, endTime);
-                if (num > 0) {
-                    log.info("退费成功,batchId:{},phone:{}", batchId, phone);
+                String query = StrUtil.format("{} and {} and 退费成功 and not 下行", batchId, phone);
+                List<String> logList = SLSUtils.queryLogsContent(query, startDate, endTime);
+                if (CollectionUtils.isNotEmpty(logList)) {
+                    if (logList.size() == 1) {
+                        log.info("退费成功,batchId:{},phone:{}", batchId, phone);
+                        String str = logList.get(0);
+                        String amount = str.substring(str.indexOf("refundAmount:"), str.indexOf(",batchId:")).replace("refundAmount:", "");
+                        String value = batchId + "," + phone + "," + amount + "\n";
+                        FileUtils.write(refundSuccessFile, value, "utf-8", true);
+                    } else {
+                        log.info("退费成功,数据错误,batchId:{},phone:{}", batchId, phone);
+                    }
                 }
                 count++;
                 if (count % 10000 == 0) {

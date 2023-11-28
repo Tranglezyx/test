@@ -13,7 +13,7 @@ import java.util.Date;
 public class RefundApp {
 
     public static void main(String[] args) throws IOException, ParseException {
-        generateRefundCompareSql("20231101", "20231127");
+        generateRefundCompareSql("20230901", "20231001");
     }
 
     private static void generateRefundCompareSql(String startStr, String endStr) throws IOException, ParseException {

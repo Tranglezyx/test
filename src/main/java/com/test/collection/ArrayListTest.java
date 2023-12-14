@@ -21,14 +21,8 @@ public class ArrayListTest {
 
     public static void main(String[] args) {
         initUserList();
-        Iterator<User> iterator = userList.iterator();
-        while (iterator.hasNext()) {
-            User next = iterator.next();
-            if (next.getUserName().equals("111")) {
-                iterator.remove();
-            }
-        }
-        log.info("{}", userList);
+        User ddd = userList.stream().filter(item -> item.getUserName().equals("ddd")).findAny().orElse(null);
+        log.info("{}", ddd);
     }
 
     public static void sortedTest() {

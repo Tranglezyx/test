@@ -52,13 +52,13 @@ public class SearchLogsApp {
     }
 
     private static void queryRefundSuccessInfo() throws IOException, LogException, ParseException {
-        String fileName = "1120.json";
+        String fileName = "20231212.json";
         String toString = FileUtils.readFileToString(new File(fileName), "UTF-8");
         JSONObject jsonObject = JSON.parseObject(toString);
         JSONArray records = jsonObject.getJSONArray("RECORDS");
         // fromTime和toTime表示查询日志的时间范围，Unix时间戳格式。
-        String startDate = "2023-11-21 00:00:00";
-        String endTime = "2023-11-27 23:59:59";
+        String startDate = "2023-12-12 00:00:00";
+        String endTime = "2023-12-13 23:59:59";
         log.info("需要判断的号码数量为:{}", records.size());
         File refundSuccessFile = new File("退费成功" + fileName);
         int count = 0;

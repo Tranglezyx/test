@@ -13,11 +13,10 @@ import java.util.Base64;
 @Slf4j
 public class AESApp {
 
-    public static void main(String[] args) throws NoSuchAlgorithmException {
-        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
-        SecretKey secretKey = keyGen.generateKey();
-        String value = Base64.getEncoder().encodeToString(secretKey.getEncoded());
-        log.info("{}",value);
+    public static void main(String[] args) throws Exception {
+        String key = "797E59288350012A4B47B2C160936568";
+        String phone = "18942979785";
+        System.out.println(encrypt(phone,key));
     }
 
     private static Cipher CIPHER = null;

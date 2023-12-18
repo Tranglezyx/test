@@ -19,8 +19,10 @@ public class KeyInputApp {
 
     public static void main(String[] args) {
         try {
-            WinDef.HWND hwnd = User32.INSTANCE.FindWindow(null, "记事本");
-            System.out.println(hwnd);
+            boolean desktopSupported = Desktop.isDesktopSupported();
+            System.out.println(desktopSupported);
+//            WinDef.HWND hwnd = User32.INSTANCE.FindWindow(null, "Google Chrome");
+//            System.out.println(hwnd);
         } catch (Exception e) {
             e.printStackTrace();
         }

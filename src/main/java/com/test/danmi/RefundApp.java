@@ -13,12 +13,12 @@ import java.util.Date;
 public class RefundApp {
 
     public static void main(String[] args) throws IOException, ParseException {
-        generateRefundCompareSql("20230901", "20231001");
+        generateRefundCompareSql("20231219", "20231231");
     }
 
     private static void generateRefundCompareSql(String startStr, String endStr) throws IOException, ParseException {
         String sql = "select '{}' as date, (select count(0) from t_sms_to_{}_0 where pre_deduction_status = 'SUCCESS') as deductionNum," +
-                "  (select count(0) from t_sms_to_{}_0 where pre_deduction_status = 'SUCCESS' and refund_bill_status = 'SUCCESS') as refundNum";
+                "  (select count(0) from t_sms_to_{}_0 where pre_deduction_status = 'SUCCESS' and refund_bill_status in ('SUCCESS','FAILED')) as refundNum";
 
         Date start = DateUtils.parseDate(startStr, "yyyyMMdd");
         Date end = DateUtils.parseDate(endStr, "yyyyMMdd");

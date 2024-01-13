@@ -44,7 +44,7 @@ public class NettyProtocolTcpServer {
                             socketChannel.pipeline().addLast(new NettyProtocolTcpServerHandler());
                         }
                     });
-            System.out.println(" --- 服务器准备OK --- ");
+            log.info(" --- 服务器准备OK ---");
 
             // 绑定端口并且同步
             ChannelFuture channelFuture = serverBootstrap.bind(9090).sync();
@@ -53,9 +53,10 @@ public class NettyProtocolTcpServer {
                 @Override
                 public void operationComplete(ChannelFuture channelFuture) throws Exception {
                     if (channelFuture.isSuccess()) {
-                        System.out.println("绑定端口成功");
+                        System.out.println("");
+                        log.info("绑定端口成功");
                     } else {
-                        System.out.println("绑定端口失败");
+                        log.info("绑定端口失败");
                     }
                 }
             });

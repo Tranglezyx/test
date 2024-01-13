@@ -18,7 +18,8 @@ public class MessageDecoder extends ReplayingDecoder<Void> {
         log.info("准备解码:{}", list);
         // 将二进制字节码转成具体数据对象
         int length = byteBuf.readInt();
-        byte[] content = new byte[length];
+//        byte[] content = new byte[length];
+        byte[] content = new byte[1024];
         byteBuf.readBytes(content);
         MessageProtocol messageProtocol = new MessageProtocol();
         messageProtocol.setLength(length);

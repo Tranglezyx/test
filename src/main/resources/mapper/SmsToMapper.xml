@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.mapper.SmsToMapper">
+
+    <insert id="batchInsert">
+        insert into t_sms_to(id,batch_id,target_number,content)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.id},#{item.batchId},#{item.targetNumber},#{item.content})
+        </foreach>
+    </insert>
+    <insert id="batchInsertUpdateOnDuplicateKey">
+        insert into t_sms_to(id,batch_id,target_number,content)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.id},#{item.batchId},#{item.targetNumber},#{item.content})
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        content = VALUES(content)
+    </insert>
+</mapper>

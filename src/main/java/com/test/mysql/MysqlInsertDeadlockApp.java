@@ -37,10 +37,14 @@ public class MysqlInsertDeadlockApp {
      * @param sqlSessionFactory
      */
     private static void onlyBatchInsertUpdateOnDuplicateKeyTest(SqlSessionFactory sqlSessionFactory) {
-        executors.execute(() -> batchInsert(buildSmsToList(), sqlSessionFactory));
-        executors.execute(() -> batchInsert(buildSmsToList(), sqlSessionFactory));
-        executors.execute(() -> batchInsert(buildSmsToList(), sqlSessionFactory));
-        executors.execute(() -> batchInsert(buildSmsToList(), sqlSessionFactory));
+        executors.execute(() -> batchInsertUpdateOnDuplicateKey(buildSmsToList(), sqlSessionFactory));
+        executors.execute(() -> batchInsertUpdateOnDuplicateKey(buildSmsToList(), sqlSessionFactory));
+        executors.execute(() -> batchInsertUpdateOnDuplicateKey(buildSmsToList(), sqlSessionFactory));
+        executors.execute(() -> batchInsertUpdateOnDuplicateKey(buildSmsToList(), sqlSessionFactory));
+        executors.execute(() -> batchInsertUpdateOnDuplicateKey(buildSmsToList(), sqlSessionFactory));
+        executors.execute(() -> batchInsertUpdateOnDuplicateKey(buildSmsToList(), sqlSessionFactory));
+        executors.execute(() -> batchInsertUpdateOnDuplicateKey(buildSmsToList(), sqlSessionFactory));
+        executors.execute(() -> batchInsertUpdateOnDuplicateKey(buildSmsToList(), sqlSessionFactory));
     }
 
     /**
@@ -83,6 +87,23 @@ public class MysqlInsertDeadlockApp {
                 int resultSet = statement.executeUpdate(sql);
                 log.info("处理结果,result:{}", resultSet);
                 statement.close();
+            } catch (Exception e) {
+                log.error("出现错误", e);
+            }
+        }
+    }
+
+    private static void batchInsertUpdateOnDuplicateKey(List<SmsTo> list, SqlSessionFactory sqlSessionFactory) {
+        List<List<SmsTo>> partition = Lists.partition(list, 200);
+        for (List<SmsTo> toList : partition) {
+            try {
+                // 开启 session
+                SqlSession session = sqlSessionFactory.openSession();
+                SmsToMapper smsToMapper = session.getMapper(SmsToMapper.class);
+                int resultSet = smsToMapper.batchInsertUpdateOnDuplicateKey(toList);
+                log.info("处理结果,result:{}", resultSet);
+                session.commit();
+                session.close();
             } catch (Exception e) {
                 log.error("出现错误", e);
             }

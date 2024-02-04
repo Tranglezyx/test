@@ -1,4 +1,4 @@
-package com.test.dm.day20240202;
+package com.dm.day20240202;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;

@@ -1,4 +1,4 @@
-package com.dm.day20240202;
+package com.dm.password;
 
 import lombok.Data;
 

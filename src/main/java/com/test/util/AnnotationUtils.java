@@ -1,9 +1,5 @@
 package com.test.util;
 
-import com.test.annotation.Column;
-import com.test.entity.User;
-import org.apache.commons.lang3.reflect.FieldUtils;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;

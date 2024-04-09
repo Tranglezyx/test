@@ -1,5 +1,7 @@
 package com.test.db.jdbc;
 
+import com.test.db.utils.JDBCUtils;
+
 import java.sql.*;
 
 /**

@@ -21,10 +21,10 @@ import java.util.concurrent.*;
 public class SmsGateSendApp {
 
     private static final ThreadPoolExecutor executor = new ThreadPoolExecutor(5,
-            10,
+            20,
             30,
             TimeUnit.MINUTES,
-            new ArrayBlockingQueue<>(10000000));
+            new ArrayBlockingQueue<>(100000000));
 
     public static void main(String[] args) throws Exception {
         String uri = "cmpp://192.168.11.131:30393?username=pcdG01&password=NV3pxt6v&version=32&spcode=10086&msgsrc=test01&serviceid=000000&window=1024&maxchannel=1";
@@ -35,13 +35,13 @@ public class SmsGateSendApp {
         final SmsClient smsClient = builder.uri(uri) // 保持空闲连接，以便能接收上行或者状态报告消息
                 .receiver(new MessageReceiver() {
                     public void receive(BaseMessage message) {
-                        log.info("收到回执:{}", JSONObject.toJSONString(message));
+//                        log.info("收到回执:{}", JSONObject.toJSONString(message));
                     }
                 }).build();
 
 
         Future future = null;
-        int size = 3;
+        int size = 10_0000;
         //发送5000条短信
         for (int i = 0; i < size; i++) {
             future = executor.submit(new Runnable() {
@@ -59,7 +59,7 @@ public class SmsGateSendApp {
                     try {
                         //调用send方法发送
                         response = (CmppSubmitResponseMessage) smsClient.send(msg);
-                        log.info("发送结果:{}", JSONObject.toJSONString(response));
+//                        log.info("发送结果:{}", JSONObject.toJSONString(response));
                         //收到Response消息
                     } catch (Exception e) {
                         log.info("send error:", e);

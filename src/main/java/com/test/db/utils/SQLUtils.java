@@ -1,4 +1,4 @@
-package com.test.db.jdbc;
+package com.test.db.utils;
 
 import cn.hutool.core.util.StrUtil;
 import com.test.annotation.Table;
@@ -21,7 +21,6 @@ public class SQLUtils {
         if (CollectionUtils.isEmpty(list)) {
             return null;
         }
-        StringBuilder sb = new StringBuilder();
         Object object = list.get(0);
         Class<?> clazz = object.getClass();
         Table table = clazz.getAnnotation(Table.class);

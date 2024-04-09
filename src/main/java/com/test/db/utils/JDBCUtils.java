@@ -1,5 +1,6 @@
-package com.test.db.jdbc;
+package com.test.db.utils;
 
+import com.test.db.jdbc.MysqlConstants;
 import org.apache.log4j.Logger;
 
 import java.sql.*;

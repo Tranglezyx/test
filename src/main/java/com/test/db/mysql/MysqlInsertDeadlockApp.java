@@ -2,7 +2,7 @@ package com.test.db.mysql;
 
 import com.google.common.collect.Lists;
 import com.test.domain.entity.SmsTo;
-import com.test.db.jdbc.SQLUtils;
+import com.test.db.utils.SQLUtils;
 import com.test.db.mapper.SmsToMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.io.Resources;

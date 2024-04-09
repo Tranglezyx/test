@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,9 +18,40 @@ public class ArrayListTest {
     public static List<User> userList = new ArrayList<>();
 
     public static void main(String[] args) {
-        initUserList();
-        User ddd = userList.stream().filter(item -> item.getUserName().equals("ddd")).findAny().orElse(null);
-        log.info("{}", ddd);
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        test(list);
+        log.info("{}", list);
+        test3(list);
+        log.info("{}", list);
+    }
+
+    public static void test(List<Integer> list) {
+        list = test1(list);
+        log.info("{}", list.size());
+    }
+
+    public static void test3(List<Integer> list) {
+        list = test2(list);
+        log.info("{}", list.size());
+    }
+
+    public static List<Integer> test1(List<Integer> list) {
+        List<Integer> tmpList = new ArrayList<>();
+        tmpList.add(3);
+        return tmpList;
+    }
+
+    public static List<Integer> test2(List<Integer> list) {
+        Iterator<Integer> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            Integer next = iterator.next();
+            if (next == 1) {
+                iterator.remove();
+            }
+        }
+        return list;
     }
 
     public static void sortedTest() {

@@ -44,7 +44,7 @@ public class ClickhouseApp {
     private static final Executor executor = Executors.newFixedThreadPool(30);
 
     public static void main(String[] args) throws SQLException, IllegalAccessException {
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 9000; i++) {
             executor.execute(ClickhouseApp::extracted);
         }
     }
@@ -87,12 +87,12 @@ public class ClickhouseApp {
         smsSend.setMobilePrice(RandomUtil.randomLong(300, 501));
         smsSend.setTelecomPrice(RandomUtil.randomLong(300, 501));
         smsSend.setUnicomPrice(RandomUtil.randomLong(300, 501));
-        long day = 1000 * 60 * 60 * RandomUtil.randomLong(1,25);
+        long day = 1000 * 60 * 60 * RandomUtil.randomLong(1, 25) * RandomUtil.randomLong(-100, 100);
 
-        smsSend.setSubmitTime(System.currentTimeMillis() + RandomUtil.randomLong(-100, 100) * day);
+        smsSend.setSubmitTime(System.currentTimeMillis() + day);
         smsSend.setChannelId(RandomUtil.randomLong(1, 500));
         smsSend.setExtensionCode(RandomUtil.randomNumbers(6));
-        smsSend.setUserSubAccountId(RandomUtil.randomLong(10000,20000));
+        smsSend.setUserSubAccountId(RandomUtil.randomLong(10000, 20000));
 
         return smsSend;
     }

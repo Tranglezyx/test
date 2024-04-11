@@ -10,9 +10,11 @@ import java.util.Random;
 public class App {
 
     public static void main(String[] args) {
-        int i = 0;
-        System.out.println(i++);
-        System.out.println(++i);
+        StringBuilder sb = new StringBuilder();
+        sb.append("1234");
+        sb.replace(sb.length() - 1,sb.length(),"");
+        sb.append("5");
+        System.out.println(sb);
     }
 
     public static void insert(){

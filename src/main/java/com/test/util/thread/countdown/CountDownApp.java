@@ -6,6 +6,7 @@ import org.apache.commons.lang3.RandomUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -15,7 +16,37 @@ public class CountDownApp {
 
     public static void main(String[] args) throws InterruptedException {
 //        test1();
-        test2();
+//        test2();
+        test3();
+    }
+
+    public static void test3() throws InterruptedException {
+        Executor executor = Executors.newFixedThreadPool(10);
+        CountDownLatch latch = new CountDownLatch(3);
+        long start = System.currentTimeMillis();
+        executor.execute(() -> {
+            try {
+                run2(latch);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        executor.execute(() -> {
+            try {
+                run2(latch);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        executor.execute(() -> {
+            try {
+                run2(latch);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        latch.await();
+        log.info("结束，耗时:{}ms", System.currentTimeMillis() - start);
     }
 
     private static void test2() throws InterruptedException {

@@ -10,15 +10,17 @@ public class LinkedHashSetApp {
 
 
     public static void main(String[] args) {
-        LinkedHashSet<Object> hashSet = new LinkedHashSet<>();
-        hashSet.add(1);
-        hashSet.add(2);
-        hashSet.add(7);
-        hashSet.add(4);
-        hashSet.add(3);
+        LinkedHashSet<String> hashSet = new LinkedHashSet<>();
+        hashSet.add("4");
+        hashSet.add("1");
+        hashSet.add("2");
+        hashSet.add("7");
+        hashSet.add("4");
+        hashSet.add("3");
         log.info(JSONObject.toJSONString(hashSet));
 
         LinkedHashSet linkedHashSet = JSONObject.parseObject("[1,2,7,4,3]", LinkedHashSet.class);
         log.info(linkedHashSet.toString());
+        log.info(hashSet.stream().findFirst().get());
     }
 }

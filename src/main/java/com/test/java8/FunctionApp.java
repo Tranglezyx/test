@@ -18,9 +18,17 @@ public class FunctionApp {
         System.out.println(user);
         set("111",user::setPassword);
         System.out.println(user);
+
+        get(user,User::getUserName);
+        get(user,User::getPassword);
     }
 
     public static void set(String value, Consumer<String> function){
         function.accept(value);
+    }
+
+    public static void get(User user,Function<User,String> function){
+        String apply = function.apply(user);
+        System.out.println(apply);
     }
 }

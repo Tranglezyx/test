@@ -15,21 +15,17 @@ public class KafkaTopicCreator {
 
     public static void main(String[] args) {
         Properties props = new Properties();
-        props.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, KafkaConstants.BOOTSTRAP_SERVERS);
+        props.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, "192.168.11.131:31092");
 
         AdminClient client = AdminClient.create(props);
 
-        NewTopic newTopic = new NewTopic(KafkaConstants.TOPIC_NAME, KafkaConstants.NUM_PARTITIONS, KafkaConstants.REPLICATION_FACTOR);
+        NewTopic newTopic = new NewTopic("zyx-kafka", 10, KafkaConstants.REPLICATION_FACTOR);
 
         try {
             client.createTopics(Collections.singleton(newTopic)).all().get();
             System.out.println("Topic created successfully.");
-        } catch (InterruptedException | ExecutionException e) {
-            if (e.getCause() instanceof TopicExistsException) {
-                System.out.println("Topic already exists.");
-            } else {
-                e.printStackTrace();
-            }
+        } catch (Exception e) {
+            log.error("error = ", e);
         } finally {
             client.close();
         }

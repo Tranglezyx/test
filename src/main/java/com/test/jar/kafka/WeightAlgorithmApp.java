@@ -36,15 +36,25 @@ public class WeightAlgorithmApp {
     }
 
     public static void main(String[] args) {
-        System.out.println(calculatePullNum(Lists.newArrayList("a", "b", "c", "d", "e", "f", "g", "h", "i", "j"), 10000, "a"));
-        System.out.println(calculatePullNum(Lists.newArrayList("a", "b", "c", "d", "e", "f", "g", "h", "i", "j"), 10000, "b"));
-        System.out.println(calculatePullNum(Lists.newArrayList("a", "b", "c", "d", "e", "f", "g", "h", "i", "j"), 10000, "c"));
-        System.out.println(calculatePullNum(Lists.newArrayList("a", "b", "c", "d", "e", "f", "g", "h", "i", "j"), 10000, "d"));
-        System.out.println(calculatePullNum(Lists.newArrayList("a", "b", "c", "d", "e", "f", "g", "h", "i", "j"), 10000, "e"));
-        System.out.println(calculatePullNum(Lists.newArrayList("a", "b", "c", "d", "e", "f", "g", "h", "i", "j"), 10000, "f"));
-        System.out.println(calculatePullNum(Lists.newArrayList("a", "b", "c", "d", "e", "f", "g", "h", "i", "j"), 10000, "g"));
-        System.out.println(calculatePullNum(Lists.newArrayList("a", "b", "c", "d", "e", "f", "g", "h", "i", "j"), 10000, "h"));
-        System.out.println(calculatePullNum(Lists.newArrayList("a", "b", "c", "d", "e", "f", "g", "h", "i", "j"), 10000, "i"));
-        System.out.println(calculatePullNum(Lists.newArrayList("a", "b", "c", "d", "e", "f", "g", "h", "i", "j"), 10000, "j"));
+//        System.out.println(calculatePullNum(Lists.newArrayList("a", "b", "c", "d", "e", "f", "g", "h", "i", "j"), 10000, "a"));
+//        System.out.println(calculatePullNum(Lists.newArrayList("a", "b", "c", "d", "e", "f", "g", "h", "i", "j"), 10000, "b"));
+//        System.out.println(calculatePullNum(Lists.newArrayList("a", "b", "c", "d", "e", "f", "g", "h", "i", "j"), 10000, "c"));
+//        System.out.println(calculatePullNum(Lists.newArrayList("a", "b", "c", "d", "e", "f", "g", "h", "i", "j"), 10000, "d"));
+//        System.out.println(calculatePullNum(Lists.newArrayList("a", "b", "c", "d", "e", "f", "g", "h", "i", "j"), 10000, "e"));
+//        System.out.println(calculatePullNum(Lists.newArrayList("a", "b", "c", "d", "e", "f", "g", "h", "i", "j"), 10000, "f"));
+//        System.out.println(calculatePullNum(Lists.newArrayList("a", "b", "c", "d", "e", "f", "g", "h", "i", "j"), 10000, "g"));
+//        System.out.println(calculatePullNum(Lists.newArrayList("a", "b", "c", "d", "e", "f", "g", "h", "i", "j"), 10000, "h"));
+//        System.out.println(calculatePullNum(Lists.newArrayList("a", "b", "c", "d", "e", "f", "g", "h", "i", "j"), 10000, "i"));
+//        System.out.println(calculatePullNum(Lists.newArrayList("a", "b", "c", "d", "e", "f", "g", "h", "i", "j"), 10000, "j"));
+
+        System.out.println(calculatePullNum(Lists.newArrayList("a", "b", "c", "d", "e", "f", "g", "h", "i"), 10000, "a"));
+        System.out.println(calculatePullNum(Lists.newArrayList("a", "b", "c", "d", "e", "f", "g", "h", "i"), 10000, "b"));
+        System.out.println(calculatePullNum(Lists.newArrayList("a", "b", "c", "d", "e", "f", "g", "h", "i"), 10000, "c"));
+        System.out.println(calculatePullNum(Lists.newArrayList("a", "b", "c", "d", "e", "f", "g", "h", "i"), 10000, "d"));
+        System.out.println(calculatePullNum(Lists.newArrayList("a", "b", "c", "d", "e", "f", "g", "h", "i"), 10000, "e"));
+        System.out.println(calculatePullNum(Lists.newArrayList("a", "b", "c", "d", "e", "f", "g", "h", "i"), 10000, "f"));
+        System.out.println(calculatePullNum(Lists.newArrayList("a", "b", "c", "d", "e", "f", "g", "h", "i"), 10000, "g"));
+        System.out.println(calculatePullNum(Lists.newArrayList("a", "b", "c", "d", "e", "f", "g", "h", "i"), 10000, "h"));
+        System.out.println(calculatePullNum(Lists.newArrayList("a", "b", "c", "d", "e", "f", "g", "h", "i"), 10000, "i"));
     }
 }

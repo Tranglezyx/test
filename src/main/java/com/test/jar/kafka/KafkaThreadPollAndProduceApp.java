@@ -48,11 +48,13 @@ public class KafkaThreadPollAndProduceApp {
     }
 
     public static void main(String[] args) {
-        batchConsumer(maxPartition);
-        executor.execute(KafkaThreadPollAndProduceApp::sendInput);
+//        batchConsumer(maxPartition);
+//        executor.execute(KafkaThreadPollAndProduceApp::sendInput);
+
+        send(0, 10000, IdUtil.fastUUID());
     }
 
-    public static void batchConsumer(int maxPartition){
+    public static void batchConsumer(int maxPartition) {
         for (int i = 0; i < maxPartition; i++) {
             int finalI = i;
             executor.execute(() -> consumer(finalI));
@@ -61,7 +63,8 @@ public class KafkaThreadPollAndProduceApp {
 
     public static void consumer(int index) {
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
-        consumer.assign(Arrays.asList(new TopicPartition(topicName, index)));
+//        consumer.assign(Arrays.asList(new TopicPartition(topicName, index)));
+        consumer.subscribe(Arrays.asList(topicName));
         while (true) {
             ConsumerRecords<String, String> records = consumer.poll(100);
             for (ConsumerRecord<String, String> record : records) {
@@ -80,6 +83,7 @@ public class KafkaThreadPollAndProduceApp {
     }
 
     public static void send(int index, int size, String value) {
+        long start = System.currentTimeMillis();
         List<String> list = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             KafkaEntity kafkaEntity = new KafkaEntity(index, value);
@@ -87,12 +91,13 @@ public class KafkaThreadPollAndProduceApp {
         }
         for (int i = 0; i < size; i++) {
             ProducerRecord<String, String> producerRecord = new ProducerRecord<>(topicName, index, "", list.get(i));
-            log.info("kafka发送,data={}", producerRecord);
+//            log.info("kafka发送,data={}", producerRecord);
             producer.send(producerRecord);
             if (size % 200 == 0) {
                 producer.flush();
             }
         }
         producer.flush();
+        log.info("kafka发送完毕,耗时:{}ms,size:{}", System.currentTimeMillis() - start, size);
     }
 }

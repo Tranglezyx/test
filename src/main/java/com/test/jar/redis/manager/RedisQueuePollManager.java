@@ -31,22 +31,22 @@ public class RedisQueuePollManager extends Thread {
     public void run() {
         long start = System.currentTimeMillis();
         while (true) {
-            scan(RedisQueueConstants.QUEUE_NAME_PATTERN);
+            scan(RedisQueueConstants.QUEUE_NAME_PATTERN, 100);
             try {
-                Thread.sleep(500);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 log.error("redis消费管理线程睡眠失败，error:", e);
             }
             long now = System.currentTimeMillis();
             if ((now - start) / 1000 > 5) {
-                log.info("redis poll线程池当前执行任务数量:{}", RedisThreadPoolConstants.queuePollExecutor.getActiveCount());
+                log.info("redis poll线程池当前执行任务数量:{},等待数量:{}", RedisThreadPoolConstants.queuePollExecutor.getActiveCount(), RedisThreadPoolConstants.queuePollExecutor.getQueue().size());
                 start = now;
             }
         }
     }
 
-    public void scan(String pattern) {
-        ScanParams scanParams = new ScanParams().match(pattern).count(2);
+    public void scan(String pattern, int size) {
+        ScanParams scanParams = new ScanParams().match(pattern).count(size);
         // 初始游标
         String cursor = "0";
         do {

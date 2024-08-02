@@ -2,10 +2,7 @@ package com.test.jar.redis.constants;
 
 import com.test.jar.redis.handler.RedisQueuePollRejectHandler;
 
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 public interface RedisThreadPoolConstants {
 
@@ -21,7 +18,7 @@ public interface RedisThreadPoolConstants {
             200,
             60,
             TimeUnit.SECONDS,
-            new ArrayBlockingQueue<>(1),
+            new SynchronousQueue<Runnable>(),
             Executors.defaultThreadFactory(),
             new RedisQueuePollRejectHandler());
 }

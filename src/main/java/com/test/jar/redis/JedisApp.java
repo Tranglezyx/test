@@ -41,8 +41,8 @@ public class JedisApp {
 //        push(100000);
 //        String value = "{\"apiId\":1719239193430138882,\"apiSeqNo\":\"10236\",\"batchId\":\"2024073000000084\",\"chatbotId\":1719239193370034176,\"chatbotName\":\"蚣坝软件\",\"chatbotVersion\":\"v1\",\"city\":\"440300\",\"content\":\"\",\"conversationId\":\"c40fc0a8-dd79-4552-936b-0c2d33dbca57\",\"count\":1,\"cspReportList\":[{\"agentId\":1742853079228792834,\"batchId\":\"2024073000000084\",\"cspId\":1742751868122501121,\"providerChatbotApiParam\":\"{\\\"accessTagNo\\\":\\\"1068178520059800\\\",\\\"appId\\\":\\\"\\\",\\\"appKey\\\":\\\"\\\",\\\"chatbotToken\\\":\\\"M2RhNjYzNGRiZTg5ZDc5NDFhM2U1NTQ2NWY0ZmI0Zjg0N2YyYjExMTM3MjNlOTNkMmZkYWNhZWU5MmI4YTczZQ==\\\",\\\"yxAppId\\\":\\\"\\\",\\\"yxAppKey\\\":\\\"\\\"}\",\"providerChatbotNo\":\"1068178520059800\",\"providerCompanyNo\":\"311A311A296119399488\",\"templateReqDTO\":{\"apiId\":1719239193430138882,\"apiSeqNo\":\"10236\",\"id\":1816027831574986752,\"seqNo\":\"10720\",\"templateContentList\":[{\"id\":1816027831579181056,\"templateId\":1816027831574986752,\"textContent\":\"test666\",\"title\":\"\"}],\"templateName\":\"测试文本模板20240313(43)\",\"type\":\"TEXT\"}}],\"fallBack\":0,\"id\":1818276068319170560,\"messageCspReqDTOList\":[{\"agentId\":1742853079228792834,\"cspId\":1742751868122501121,\"cspName\":\"旦米5G消息平台-河北\",\"provider\":\"CMCC\",\"targetNumber\":\"13428945826\"}],\"province\":\"440000\",\"sessionId\":\"6d87ec37-6061-4e6a-9628-cd8c45ae287f\",\"smsFormat\":\"RCS_FORMAT\",\"smsType\":\"TEXT\",\"templateReqDTO\":{\"$ref\":\"$.cspReportList[0].templateReqDTO\"},\"type\":\"SEND\"}";
         String smsValue = "";
-        for (int i = 0; i < 500; i++) {
-            batchPush(10000, smsValue, "queue:" + i);
+        for (int i = 0; i < 1; i++) {
+            batchPush(1000000, smsValue, "queue:" + i);
         }
 //        pollAll();
 //        System.out.println(poll(1000));

@@ -10,6 +10,8 @@ import org.apache.commons.collections4.CollectionUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,8 +25,9 @@ import java.util.List;
 public class RedisQueuePollThread extends Thread {
 
     private int waitTime = 1;
-    private int pollSize = 1000;
+    private int pollSize = 50;
     private int sleepTime = 50;
+    private BigDecimal targetProcessSecond = BigDecimal.valueOf(1.2);
     private String queueName;
     private Jedis jedis;
     private RedisQueuePollThreadStartHandler startHandler;
@@ -53,8 +56,12 @@ public class RedisQueuePollThread extends Thread {
             }
             List<String> list = (List<String>) jedis.eval(RedisQueuePollScriptConstants.POLL_SCRIPT, Arrays.asList(queueName), Arrays.asList("0", String.valueOf(pollSize - 1)));
             if (CollectionUtils.isNotEmpty(list)) {
-//                log.info("{}-消费消息,size:{}", Thread.currentThread().getName(), list.size());
+                long start = System.currentTimeMillis();
                 consumerAdaptor.process(list);
+                long processTime = System.currentTimeMillis() - start;
+                int tmpPollSize = calculatePollSize(pollSize, processTime);
+                log.info("{}-消费 {} 数据耗时 {} ms,拉取数量调整为:{}", queueName, pollSize, processTime, tmpPollSize);
+                pollSize = tmpPollSize;
             } else {
                 try {
                     Thread.sleep(sleepTime);
@@ -64,5 +71,11 @@ public class RedisQueuePollThread extends Thread {
                 }
             }
         }
+    }
+
+    public int calculatePollSize(int pollSize, long time) {
+        BigDecimal second = BigDecimal.valueOf(time).divide(BigDecimal.valueOf(1000), 2, RoundingMode.UP);
+        BigDecimal weight = targetProcessSecond.divide(second, 2, RoundingMode.UP);
+        return Math.min(BigDecimal.valueOf(pollSize).multiply(weight).intValue(), 1000);
     }
 }

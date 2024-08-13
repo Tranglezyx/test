@@ -32,7 +32,7 @@ public class AuditRecordApp {
 
     private static void auditRecordData() throws IOException {
         List<String> strings = Files.readAllLines(Paths.get("D:\\result2.txt"));
-        File file = new File("D:\\audit_record.sql");
+        File file = new File("D:\\cmpp_audit_record.sql");
 
         String sqlTemplate = "INSERT INTO t_sms_audit_record_{} (id," +
                 " sms_id," +
@@ -114,6 +114,10 @@ public class AuditRecordApp {
             String uuid = IdUtil.fastUUID() + IdUtil.getSnowflakeNextId();
             String jsonTemplate = "{\"{}\":[]}";
             String json = StrUtil.format(jsonTemplate, data.getPhone());
+            if(batchId.startsWith("iw") || batchId.startsWith("tw")){
+                continue;
+            }
+            batchId = "";
 
             String detailSql = StrUtil.format(detailTemplate, tableName, IdUtil.getSnowflakeNextId(), batchId, json, createTimeDate.getTime(), 1, uuid);
             String recordSql = StrUtil.format(sqlTemplate, tableName,

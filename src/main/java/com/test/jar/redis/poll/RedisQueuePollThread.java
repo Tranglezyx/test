@@ -27,7 +27,7 @@ public class RedisQueuePollThread extends Thread {
     private int waitTime = 1;
     private int pollSize = 50;
     private int sleepTime = 50;
-    private BigDecimal targetProcessSecond = BigDecimal.valueOf(1.2);
+    private BigDecimal targetProcessSecond = BigDecimal.valueOf(2);
     private String queueName;
     private Jedis jedis;
     private RedisQueuePollThreadStartHandler startHandler;

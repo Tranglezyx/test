@@ -26,42 +26,44 @@ import java.util.List;
 @Slf4j
 public class FileZipApp {
 
-    private static final OSS oss;
+    //    private static final OSS oss;
     private static final String endpoint = "oss-cn-guangzhou.aliyuncs.com";
     private static final String accessKeyId = "";
     private static final String accessKeySecret = "";
 
     static {
 
-        oss = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
+//        oss = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
     }
 
     public static void main(String[] args) {
 
+        String path = "/tmp/";
+
         String text = "hello world";
-        File txt = new File(IdUtil.fastSimpleUUID() + ".txt");
+        File txt = new File(path + IdUtil.fastSimpleUUID() + ".txt");
         FileUtil.writeString(text, txt, "utf-8");
 
-        File image = new File("D:\\data\\image\\Snipaste_2024-04-17_15-50-28.png");
-        File video = new File("D:\\data\\video\\8a6c27492cb84504b7a6de5547eb734f.mp4");
+//        File image = new File("D:\\data\\image\\Snipaste_2024-04-17_15-50-28.png");
+//        File video = new File("D:\\data\\video\\8a6c27492cb84504b7a6de5547eb734f.mp4");
 
-        String url = "https://resource.danmi.com/2024-08-16/7vybs40tmfy3nf59sm860t77w2cpz2uv/Facebook-meta.png";
+        String url = "https://resource.danmi.com/2024-08-29/sdscz7303kq7tkwhz6q1uyd0iozi9v86/ibm.jpeg";
 
 
-        String tmpName = IdUtil.fastSimpleUUID() + ".png";
-        File tmpFile = new File(tmpName);
+        String tmpName = IdUtil.fastSimpleUUID() + ".jpeg";
+        File tmpFile = new File(path + tmpName);
         HttpUtil.downloadFile(url, tmpFile);
         log.info("下载文件:{}", tmpName);
 
         String zipFileName = IdUtil.fastSimpleUUID() + ".zip";
 
-        File zip = new File(zipFileName);
+        File zip = new File(path + zipFileName);
 
         List<File> fileList = new ArrayList<>();
 
         fileList.add(txt);
-        fileList.add(image);
-        fileList.add(video);
+//        fileList.add(image);
+//        fileList.add(video);
         fileList.add(tmpFile);
 
 //        ZipUtil.zip(zip, false, txt, image, video, tmpFile);
@@ -71,12 +73,12 @@ public class FileZipApp {
 
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setObjectAcl(CannedAccessControlList.PublicRead);
-        PutObjectResult putObjectResult = oss.putObject(buckedName, zipFileName, zip, metadata);
+//        PutObjectResult putObjectResult = oss.putObject(buckedName, zipFileName, zip, metadata);
         log.info(StrUtil.format("http://{}.{}/{}", buckedName, endpoint, zipFileName));
 
 
-        FileUtil.del(txt);
+//        FileUtil.del(txt);
 //        FileUtil.del(zip);
-        FileUtil.del(tmpFile);
+//        FileUtil.del(tmpFile);
     }
 }

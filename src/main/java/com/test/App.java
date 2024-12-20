@@ -10,11 +10,14 @@ import java.util.Random;
 public class App {
 
     public static void main(String[] args) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("1234");
-        sb.replace(sb.length() - 1,sb.length(),"");
-        sb.append("5");
-        System.out.println(sb);
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("1234");
+//        sb.replace(sb.length() - 1,sb.length(),"");
+//        sb.append("5");
+//        System.out.println(sb);
+        String content = "12123【";
+        String sign = content.substring(content.indexOf("【") + 1, content.indexOf("】"));
+        System.out.println(sign);
     }
 
     public static void insert(){

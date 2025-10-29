@@ -18,4 +18,23 @@
         ON DUPLICATE KEY UPDATE
         content = VALUES(content)
     </insert>
+
+    <select id="selectSmsSignId" resultType="java.lang.Long">
+        select id from sms_sign where sign = #{sign} and developer_id = #{developerId}
+        and audit_status not in (5,2)
+    </select>
+
+    <select id="selectSmsSignTemplateProductCount" resultType="java.lang.Integer">
+        select count(0) from sms_sign_product_template where sms_sign_id = #{smsSignId} and product_id = #{productId}
+    </select>
+
+    <select id="selectTemplateParamByIdList" resultType="com.company.dm.fix.TemplateParam">
+        select t.id,t.template_name,t.sms_sign_id,t.product_id, t.template_content, tp.param_type, tp.param_index, tp.param_length, tp.param_name
+        from message_template t
+                 left join message_template_param tp on t.id = tp.template_id
+        where t.id in
+        <foreach collection="idList" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </select>
 </mapper>
